@@ -83,9 +83,9 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav">
                         <a href="index.html" class="nav-item nav-link">Home</a>
-                        <a href="about.html" class="nav-item nav-link">About</a>
+                        <a href="vote.html" class="nav-item nav-link active">Vote</a>
                         <a href="service.html" class="nav-item nav-link">Services</a>
-                        <a href="project.html" class="nav-item nav-link active">Projects</a>
+                        <a href="project.html" class="nav-item nav-link">Projects</a>
                         <a href="contact.html" class="nav-item nav-link">Contact</a>
                         <a href="login.html" class="nav-item nav-link">Login</a>
                     </div>
@@ -93,9 +93,34 @@
             </nav>
         </div>
     </div>
-    <!-- Navbar End -->
+    <!-- Navbar End -->   
 
-
+    <!-- Voting Section -->
+    <section class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h3 class="card-title text-center mb-4">Voting</h3>
+                        <div class="search-box">
+                            <i class="material-icons">&#xE8B6;</i>
+                            <input type="text" id="search" class="form-control" placeholder="Search...">
+                        </div>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary" onclick="searchMembers()">Search</button>
+                        </div>
+                        <div class="mt-4">
+                            <h5>Members</h5>
+                            <div class="member-list" id="memberList">
+                                <!-- Placeholder for dynamically populated member list -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Voting Section -->
 
     <div class="container-fluid bg-dark footer mt-5 py-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">
@@ -119,24 +144,7 @@
                 </div>
             </div>
         </div>
-
-
-    <!-- Copyright Start -->
-    <div class="container-fluid copyright py-4">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    &copy; <a class="fw-medium text-light" href="#">Your Site Name</a>, All Right Reserved.
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                    Designed By <a class="fw-medium text-light" href="https://htmlcodex.com">HTML Codex</a>
-                    Distributed By <a class="fw-medium text-light" href="https://themewagon.com">ThemeWagon</a>
-                </div>
-            </div>
-        </div>
     </div>
-    <!-- Copyright End -->
 
 
     <!-- Back to Top -->
@@ -155,6 +163,37 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <script>
+        // Function to search for members
+        function searchMembers() {
+            const searchValue = document.getElementById('search').value;
+            const memberList = document.getElementById('memberList');
+
+            // Clear previous search results
+            memberList.innerHTML = '';
+
+            // Placeholder code to retrieve member data from the database
+            // Replace this code with your own implementation to fetch and populate member data dynamically
+            const members = [
+                { name: 'Member 1', id: 1 },
+                { name: 'Member 2', id: 2 },
+                { name: 'Member 3', id: 3 },
+                { name: 'Member 4', id: 4 },
+            ];
+
+            // Filter members based on search value
+            const filteredMembers = members.filter(member => member.name.toLowerCase().includes(searchValue.toLowerCase()));
+
+            // Display the filtered members
+            filteredMembers.forEach(member => {
+                const memberElement = document.createElement('div');
+                memberElement.classList.add('member');
+                memberElement.textContent = member.name;
+                memberList.appendChild(memberElement);
+            });
+        }
+    </script>
 </body>
 
 </html>
