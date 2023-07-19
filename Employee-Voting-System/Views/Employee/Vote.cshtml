@@ -5,24 +5,6 @@
 }
 @Html.Partial("_EmployeeNavBar")
 
-@if (ViewBag.hasVoted)
-{
-    <h1>3amalt Vote</h1>
-}
-else
-{
-    <h1>Ma3amalsh Vote</h1>
-}
-
-@if (ViewBag.votingOpened)
-{
-    <h1>El Voting Maftoo7</h1>
-}
-else
-{
-    <h1>El Voting Ma2fool</h1>
-}
-
 <div id="names"></div>
 <!-- Voting Section -->
 <section class="container py-5">
@@ -85,15 +67,21 @@ else
 <script src="js/main.js"></script>
 
 <script>
+    var employees;
     $.ajax({
         type: "GET",
         url: "@Url.Action("getEmployees", "Employee")",
         success: function (response) {
             //debugger;
             
-            var myResponse = JSON.parse(response);
-            console.log(myResponse);
-            
+            employees = JSON.parse(response);
+            //console.log(myResponse);
+            const memberList = document.getElementById('memberList');
+            var output = "";
+            for (var i = 0; i < employees.length; i++) {
+                output += "<h1>" + employees[i].Name + "</h1>"
+            }
+            memberList.innerHTML = output;
             alert("Success");
         },
         error: function (response) {
@@ -103,7 +91,12 @@ else
     })
 
 
-
+    /*const memberList = document.getElementById('memberList');
+    var output = "";
+    for(var i = 0; i < employees.length; i++){
+        output += "<h1>" + employees[i].Name +"</h1>"
+    }
+    memberList.innerHTML = output;*/
 
     // Function to search for members
     function searchMembers() {
@@ -115,12 +108,7 @@ else
 
         // Placeholder code to retrieve member data from the database
         // Replace this code with your own implementation to fetch and populate member data dynamically
-        const members = [
-            { name: 'Member 1', id: 1 },
-            { name: 'Member 2', id: 2 },
-            { name: 'Member 3', id: 3 },
-            { name: 'Member 4', id: 4 },
-        ];
+        const members = employees
 
         // Filter members based on search value
         const filteredMembers = members.filter(member => member.name.toLowerCase().includes(searchValue.toLowerCase()));

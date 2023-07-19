@@ -39,7 +39,7 @@ namespace Employee_Voting_System.Controllers
                 employees = dbcontext.Employee.ToList();
             }
 
-            for(int i = 0; i < employees.Count; i++)
+            for (int i = 0; i < employees.Count; i++)
             {
                 if (employees[i].EmpId == employee.EmpId)
                 {
