@@ -8,48 +8,54 @@ namespace Employee_Voting_System.Controllers
     public class LoginController : Controller
     {
         private readonly ILogger<LoginController> _logger;
-        private readonly BankdbContext _dbContext;
+        //private readonly BankdbContext _dbContext;
 
-        public LoginController(ILogger<LoginController> logger, BankdbContext bankdbContext)
+        public LoginController(ILogger<LoginController> logger)
         {
+            
             _logger = logger;
-            _dbContext = bankdbContext;
+            //_dbContext = bankdbContext;
         }
 
         public IActionResult Index()
         {
-            return View("Index");
+            
+            return View();
         }
 
         [HttpPost]
-       public IActionResult LoginPost(Login login)
+       public IActionResult Index(Login login)
         {
             string loginResponse = validateLogin(login);
             
             switch(loginResponse)
             {
                 case "Manager":
-                    //return View();
-                    TempData["username"] = login.username;
+                    TempData["Username"] = login.username;
                     return RedirectToAction("Index", "Manager");
                 case "Employee":
-                    TempData["username"] = login.username;
-                    //return View();
+                    TempData["Username"] = login.username;
                     return RedirectToAction("Index", "Employee");
                 case "Wrong Password":
-                    ViewData["loginstatus"] = loginResponse;
-                    return View("Index");
-                    
+                    ViewBag.loginStatus = loginResponse;
+                    return View();
                 default:
-                    ViewData["loginstatus"] = loginResponse;
-                    return View("Index");                    
+                    ViewBag.loginStatus = loginResponse;
+                    return View();                    
             }
         }
         
         private string validateLogin(Login login)
         {
-            List<Employee> employees = _dbContext.Employee.ToList();
-            List<Manager> managers = _dbContext.Manager.ToList();
+            List<Employee> employees;
+            List<Manager> managers;
+            using(var dbContext = new BankdbContext())
+            {
+              
+                 employees = dbContext.Employee.ToList();
+                 managers = dbContext.Manager.ToList();
+            }
+
 
             for(int i = 0; i < employees.Count; i++)
             {

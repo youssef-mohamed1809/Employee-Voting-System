@@ -1,0 +1,103 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@Html.Partial("_EmployeeNavBar")
+
+
+
+
+<!-- Voting Section -->
+<section class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4">Voting</h3>
+                    <div class="search-box">
+                        <i class="material-icons">&#xE8B6;</i>
+                        <input type="text" id="search" class="form-control" placeholder="Search...">
+                    </div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-primary" onclick="searchMembers()">Search</button>
+                    </div>
+                    <div class="mt-4">
+                        <h5>Members</h5>
+                        <div class="member-list" id="memberList">
+                            <!-- Placeholder for dynamically populated member list -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Voting Section -->
+
+<div class="container-fluid bg-dark footer mt-5 py-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-lg-3 col-md-6">
+                <h4 class="text-white mb-4">Our Office</h4>
+                <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
+                <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+                <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                <div class="d-flex pt-3">
+                    <a class="btn btn-square btn-light rounded-circle me-2" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="btn btn-square btn-light rounded-circle me-2" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="btn btn-square btn-light rounded-circle me-2" href="">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a class="btn btn-square btn-light rounded-circle me-2" href="">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+
+
+
+
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
+
+<script>
+    // Function to search for members
+    function searchMembers() {
+        const searchValue = document.getElementById('search').value;
+        const memberList = document.getElementById('memberList');
+
+        // Clear previous search results
+        memberList.innerHTML = '';
+
+        // Placeholder code to retrieve member data from the database
+        // Replace this code with your own implementation to fetch and populate member data dynamically
+        const members = [
+            { name: 'Member 1', id: 1 },
+            { name: 'Member 2', id: 2 },
+            { name: 'Member 3', id: 3 },
+            { name: 'Member 4', id: 4 },
+        ];
+
+        // Filter members based on search value
+        const filteredMembers = members.filter(member => member.name.toLowerCase().includes(searchValue.toLowerCase()));
+
+        // Display the filtered members
+        filteredMembers.forEach(member => {
+            const memberElement = document.createElement('div');
+            memberElement.classList.add('member');
+            memberElement.textContent = member.name;
+            memberList.appendChild(memberElement);
+        });
+    }
+</script>
+
+

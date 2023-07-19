@@ -23,7 +23,7 @@ public partial class BankdbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        
+        optionsBuilder.UseSqlServer("Server=localhost;Database=bankdb;Trusted_Connection=True;TrustServerCertificate=true");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

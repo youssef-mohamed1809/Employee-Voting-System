@@ -5,7 +5,7 @@
 }
 
 
-<form asp-action="LoginPost" method="post" asp-controller="Login">
+<form asp-action="Index" method="post" asp-controller="Login">
     <section class="container py-5">
         <div class="row justify-content-center">
             <div class="col-lg-6">
@@ -34,10 +34,10 @@
 </form>
 
 
-@if (ViewData["loginstatus"] != "")
+@if(ViewBag.loginStatus == "Wrong Password" || ViewBag.loginStatus == "Invalid Login")
 {
-    <script>alert("Wrong")</script>
-}
+    <script>alert(@ViewBag.loginStatus)</script>
+} 
 
 
 
