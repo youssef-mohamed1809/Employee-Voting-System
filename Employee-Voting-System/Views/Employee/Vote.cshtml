@@ -5,9 +5,25 @@
 }
 @Html.Partial("_EmployeeNavBar")
 
+@if (ViewBag.hasVoted)
+{
+    <h1>3amalt Vote</h1>
+}
+else
+{
+    <h1>Ma3amalsh Vote</h1>
+}
 
+@if (ViewBag.votingOpened)
+{
+    <h1>El Voting Maftoo7</h1>
+}
+else
+{
+    <h1>El Voting Ma2fool</h1>
+}
 
-
+<div id="names"></div>
 <!-- Voting Section -->
 <section class="container py-5">
     <div class="row justify-content-center">
@@ -61,7 +77,6 @@
         </div>
     </div>
 </div>
-    </div>
 
 
 
@@ -70,6 +85,26 @@
 <script src="js/main.js"></script>
 
 <script>
+    $.ajax({
+        type: "GET",
+        url: "@Url.Action("getEmployees", "Employee")",
+        success: function (response) {
+            //debugger;
+            
+            var myResponse = JSON.parse(response);
+            console.log(myResponse);
+            
+            alert("Success");
+        },
+        error: function (response) {
+            alert("Error");
+        }
+
+    })
+
+
+
+
     // Function to search for members
     function searchMembers() {
         const searchValue = document.getElementById('search').value;

@@ -15,7 +15,7 @@ public partial class BankdbContext : DbContext
     {
     }
 
-    public virtual DbSet<VotingYear> VotingYears { get; set; }
+    public virtual DbSet<VotingYear> VotingYear { get; set; }
     public virtual DbSet<Voting> Votings { get; set; }
     public virtual DbSet<Employee> Employee { get; set; }
     public virtual DbSet<Manager> Manager { get; set; }   

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Text.Json;
 
 namespace Employee_Voting_System.Controllers
 {
@@ -12,9 +13,42 @@ namespace Employee_Voting_System.Controllers
         private Employee employee;
         public IActionResult Index()
         {
+            EmployeeUsername = (string)TempData["Username"];
             employee = GetEmployeeData();
-            TempData["EmployeeName"] = employee.EmpId;
+            ViewBag.name = employee.Name;
             return View();
+        }
+
+        public IActionResult Vote()
+        {
+            bool hasVoted = hasEmployeeVoted();
+            ViewBag.hasVoted = hasVoted;
+
+            bool votingOpened = votingIsOpen();
+            ViewBag.votingOpened = votingOpened;
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult getEmployees()
+        {
+            employee = GetEmployeeData();
+            List<Employee> employees;
+            using(var dbcontext = new BankdbContext())
+            {
+                employees = dbcontext.Employee.ToList();
+            }
+
+            for(int i = 0; i < employees.Count; i++)
+            {
+                if (employees[i].EmpId == employee.EmpId)
+                {
+                    employees.RemoveAt(i);
+                }
+            }
+            string json = JsonSerializer.Serialize(employees);
+            return Ok(json);
+
         }
 
         private Employee GetEmployeeData()
@@ -51,12 +85,25 @@ namespace Employee_Voting_System.Controllers
             }
             return true;
         }
-    
-        public IActionResult Vote()
+
+        private bool votingIsOpen()
         {
-            bool hasVoted = hasEmployeeVoted();
-            ViewBag.hasVoted = hasVoted;
-            return View();
+            employee = GetEmployeeData();
+            DateTime currentDate = DateTime.Today;
+            string date = currentDate.ToString("yyyy-MM-dd");
+            List<VotingYear> res;
+            using ( var dbContext = new BankdbContext())
+            {
+                res = dbContext.VotingYear.FromSql($"select * from VotingYear where {date} > startDate and {date} < endDate ").ToList();
+            }
+
+            if (res.IsNullOrEmpty())
+            {
+                return false;
+            }
+            return true;
         }
+    
+
     }
 }
