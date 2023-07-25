@@ -32,9 +32,11 @@ namespace Employee_Voting_System.Controllers
             {
                 case "Manager":
                     TempData["Username"] = login.username;
+                    CURRENTUSER.CURRENTUSERNAME = login.username;
                     return RedirectToAction("Index", "Manager");
                 case "Employee":
                     TempData["Username"] = login.username;
+                    CURRENTUSER.CURRENTUSERNAME = login.username;
                     return RedirectToAction("Index", "Employee");
                 case "Wrong Password":
                     ViewBag.loginStatus = loginResponse;

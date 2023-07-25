@@ -13,9 +13,11 @@ namespace Employee_Voting_System.Controllers
         private Employee employee;
         public IActionResult Index()
         {
-            EmployeeUsername = (string)TempData["Username"];
+            //EmployeeUsername = (string)TempData["Username"];
+            //TempData["Username"] = EmployeeUsername;
             employee = GetEmployeeData();
             ViewBag.name = employee.Name;
+            ViewBag.id = employee.EmpId;
             return View();
         }
 
@@ -33,22 +35,33 @@ namespace Employee_Voting_System.Controllers
         public IActionResult getEmployees()
         {
             employee = GetEmployeeData();
+            Console.WriteLine(employee);
             List<Employee> employees;
             using(var dbcontext = new BankdbContext())
             {
                 employees = dbcontext.Employee.ToList();
             }
-
-            for (int i = 0; i < employees.Count; i++)
+            //TempData["idd"] = 12222;
+            //employees.RemoveAt(employee.EmpId - 1);
+              for (int i = 0; i < employees.Count; i++)
             {
-                if (employees[i].EmpId == employee.EmpId)
+                if (employees[i].Username == CURRENTUSER.CURRENTUSERNAME)
                 {
+                    TempData["idd"] = i;
                     employees.RemoveAt(i);
                 }
+                
             }
             string json = JsonSerializer.Serialize(employees);
             return Ok(json);
 
+        }
+
+        [HttpPost]
+        public IActionResult sendEmployeeID(string chosenID)
+        {
+            ViewBag.idd = chosenID;
+            return Ok();
         }
 
         private Employee GetEmployeeData()
@@ -60,11 +73,12 @@ namespace Employee_Voting_System.Controllers
             }
             foreach (Employee employee in employees)
             {
-                if (employee.Username == EmployeeUsername)
+                if (employee.Username == CURRENTUSER.CURRENTUSERNAME)
                 {
                     e = employee;
                 }
             }
+            //TempData["Username"] = EmployeeUsername;
             return e;
         }
         

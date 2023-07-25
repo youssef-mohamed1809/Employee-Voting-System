@@ -5,6 +5,8 @@
 }
 @Html.Partial("_EmployeeNavBar")
 
+<h1>@ViewBag.idd</h1>
+
 <div id="names"></div>
 <!-- Voting Section -->
 <section class="container py-5">
@@ -66,6 +68,9 @@
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
 
+
+"<div class='card' style='width: 20%;'><div class='card-body'><h5 class='card-title'>" + employees[i].Name + "</h5><a href="#" class="btn btn-primary" onclick='handleClick(" + employees[i].EmpId +")'>Vote</a></div></div>"
+
 <script>
     var employees;
     $.ajax({
@@ -75,11 +80,11 @@
             //debugger;
             
             employees = JSON.parse(response);
-            //console.log(myResponse);
             const memberList = document.getElementById('memberList');
             var output = "";
             for (var i = 0; i < employees.length; i++) {
-                output += "<h1>" + employees[i].Name + "</h1>"
+                output += "<div class='card' style = 'width: 50%'><div class='card-body'><h5 class='card-title'>" + employees[i].Name + "</h5><button type='submit' class='btn btn-primary' onclick='handleClick(" + employees[i].EmpId +")'>Vote</button ></div></div>"
+                output += "<br/>"
             }
             memberList.innerHTML = output;
             alert("Success");
@@ -91,13 +96,29 @@
     })
 
 
-    /*const memberList = document.getElementById('memberList');
-    var output = "";
-    for(var i = 0; i < employees.length; i++){
-        output += "<h1>" + employees[i].Name +"</h1>"
-    }
-    memberList.innerHTML = output;*/
 
+    function handleClick(id){
+        alert(id);
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("sendEmployeeID", "Employee")",
+            data: {chosenID: id},
+            contentType: "text/plain",
+            dataType: 'text',
+            success: function(result, status){
+                alert("Siuuu");
+            },
+            error: function(result, status){
+                console.log(result);
+                
+                alert("Oh NO");
+            }
+            
+        })
+    }
+
+
+    /*Search Function Needs to be Fixed*/
     // Function to search for members
     function searchMembers() {
         const searchValue = document.getElementById('search').value;
@@ -108,16 +129,16 @@
 
         // Placeholder code to retrieve member data from the database
         // Replace this code with your own implementation to fetch and populate member data dynamically
-        const members = employees
+        //const members = employees
 
         // Filter members based on search value
-        const filteredMembers = members.filter(member => member.name.toLowerCase().includes(searchValue.toLowerCase()));
+        const filteredMembers = members.filter(member => member.Name.toLowerCase().includes(searchValue.toLowerCase()));
 
         // Display the filtered members
         filteredMembers.forEach(member => {
             const memberElement = document.createElement('div');
             memberElement.classList.add('member');
-            memberElement.textContent = member.name;
+            memberElement.textContent = member.Name;
             memberList.appendChild(memberElement);
         });
     }
