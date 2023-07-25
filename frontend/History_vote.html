@@ -42,7 +42,6 @@
     </div>
     <!-- Spinner End -->
 
-
     <!-- Navbar Start -->
     <div id="navbar-container"></div>
     <script>
@@ -72,26 +71,25 @@
     </script>
     <!-- Navbar End -->
 
-
-    <!-- Voting History Section -->
-    <section class="container py-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-6">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h3 class="card-title text-center mb-4">Voting History</h3>
-                        <div class="mt-4">
-                            <h5>Employee Votes</h5>
-                            <div class="vote-history-list">
-                                <!-- Placeholder for dynamically populated voting history -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- History Section -->
+    <section id="ranking" class="container mt-5">
+        <h2>History Votes</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Voted employee</th>
+                        <th>Year</th>
+                        <th>Department name</th>
+                    </tr>
+                </thead>
+                <tbody id="rankingTableBody">
+                    <!-- Ranking table rows will be dynamically added here -->
+                </tbody>
+            </table>
         </div>
     </section>
-    <!-- End Voting History Section -->
+    <!-- End Ranking Table Section -->
 
     <!-- Footer Start -->
     <div id="footer-container"></div>
@@ -113,14 +111,9 @@
     </script>
     <!-- Footer End -->
 
-
-
-
-
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
             class="bi bi-arrow-up"></i></a>
-
 
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -135,30 +128,30 @@
     <script src="js/main.js"></script>
 
     <script>
-        // Function to retrieve voting history data and populate the vote history list
-        function getVotingHistory() {
-            const voteHistoryList = document.querySelector('.vote-history-list');
+        // Function to retrieve ranking data and populate the table
+        function getRankingData() {
+            const rankingTableBody = document.getElementById('rankingTableBody');
 
-            // Clear previous vote history
-            voteHistoryList.innerHTML = '';
+            // Clear previous table rows
+            rankingTableBody.innerHTML = '';
 
-            // Placeholder code to retrieve voting history data from the database
-            // Replace this code with your own implementation to fetch and populate voting history dynamically
+            // Placeholder code to retrieve ranking data from the database
+            // Replace this code with your own implementation to fetch and populate ranking data dynamically
 
-            // Create and append vote history elements
-            votingHistory.forEach(vote => {
-                const voteElement = document.createElement('div');
-                voteElement.classList.add('vote-history-item');
-                voteElement.innerHTML = `
-                    <span class="employee">${vote.employee}</span>
-                    <span class="date">${vote.date}</span>
+            // Create and append table rows for each ranking entry
+            rankingData.forEach(entry => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${entry.rank}</td>
+                    <td>${entry.option}</td>
+                    <td>${entry.votes}</td>
                 `;
-                voteHistoryList.appendChild(voteElement);
+                rankingTableBody.appendChild(row);
             });
         }
 
-        // Call the function to retrieve and populate the voting history on page load
-        getVotingHistory();
+        // Call the function to retrieve and populate the ranking data on page load
+        getRankingData();
     </script>
 </body>
 
