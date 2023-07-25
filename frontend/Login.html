@@ -71,19 +71,19 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <h3 class="card-title text-center mb-4">Login</h3>
-                        <form>
+                        
                             <div class="mb-3">
                                 <label for="username" class="form-label">Username</label>
-                                <input type="text" class="form-control" id="username" placeholder="Enter your username">
+                                <input type="text" name="username" class="form-control" id="username" placeholder="Enter your username">
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" placeholder="Enter your password">
+                                <input type="password" name="password" class="form-control" id="password" placeholder="Enter your password">
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary">Login</button>
+                                <button type="submit" class="btn btn-primary" onclick="login()">Login</button>
                             </div>
-                        </form>
+                        
                     </div>
                 </div>
             </div>
@@ -93,6 +93,36 @@
 
     <div id="footer-container"></div>
     <script>
+        document.addEventListener('keypress', function(e){
+            if(e.key == "Enter"){
+                login();
+            }
+        })
+        function login(){
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            let login = {
+                username: username,
+                password: password
+            }
+            $.ajax({
+                url: 'https://localhost:7072/api/Login',
+                contentType: 'application/json',
+                cache: false,
+                method: 'POST',
+                dataType: 'json',
+                data: JSON.stringify(login),
+                success: function(data) {
+                    sessionStorage.setItem("empID", JSON.stringify(data));
+                    window.location.href = "index.html";
+                },
+                error: function(err){
+                    alert("Invalid login");
+                }
+            });
+
+        }
+
         // Function to fetch and insert footer content
         function includeFooter() {
             fetch('footer.html')
@@ -126,6 +156,9 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script>
+
+    </script>
 </body>
 
 </html>

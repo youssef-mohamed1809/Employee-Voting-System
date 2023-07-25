@@ -40,6 +40,8 @@ namespace backend.Controllers
         }
 
 
+        
+
         [HttpGet("hasEmployeeVoted/")]
         public async Task<ActionResult<bool>> hasEmployeeVoted(int empID, int? year)
         {

@@ -1,4 +1,5 @@
 ﻿using backend.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,15 +12,18 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<ActionResult<bool>> Login(APILogin login)
         { 
-            bool loginValid = validateLogin(login.username, login.password);
+            int empID = validateLogin(login.username, login.password);
 
-            return Ok(loginValid);
+            if(empID != -1) {
+                return Ok(empID);
+            }
+            return BadRequest();
         }
 
 
         /*NON ACTION FUNCTIONS*/
         [NonAction]
-        public bool validateLogin(string username, string password)
+        public int validateLogin(string username, string password)
         {
             List<Employee> employees = new List<Employee>();
             using(var dbContext = new BankdbContext())
@@ -30,10 +34,10 @@ namespace backend.Controllers
             foreach(var employee in employees)
             {
                 if(employee.Username == username && employee.Password == password) { 
-                   return true;
+                   return employee.EmpId;
                 }
             }
-            return false;
+            return -1;
         }
     }
 }
