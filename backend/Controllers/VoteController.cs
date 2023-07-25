@@ -2,6 +2,7 @@
 using backend.Models.API_Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace backend.Controllers
 {
@@ -75,7 +76,34 @@ namespace backend.Controllers
         [HttpGet("employeeVotingHistory/")]
         public async Task<ActionResult<APIEmployeeVote>> employeeVotesHistory(int empID)
         {
-            return Ok();
+            List<APIEmployeeVote> voteHistory = new List<APIEmployeeVote>();
+            List<Votings> votings;
+            using(var dbContext = new BankdbContext())
+            {
+                votings = dbContext.Votings.FromSql($"select * from votings where empID = {empID} order by year desc").ToList();
+
+            }
+            using (var dbContext = new BankdbContext())
+            {
+                foreach (var vote in votings)
+                {
+                    APIEmployeeVote voter = new APIEmployeeVote();
+                    voter.year = (int)vote.Year;
+                    voter.id = (int)vote.VotedEmpId;
+                    var temp = dbContext.Employee.ToList();
+                    for (int i = 0; i < temp.Count; i++)
+                    {
+                        if (temp[i].EmpId == vote.VotedEmpId)
+                        {
+                            voter.name = temp[i].Name;
+                        }
+                    }
+                    voteHistory.Add(voter);
+                }
+            }
+
+
+            return Ok(voteHistory);
         }
 
         [HttpGet("/winnerByYear")]
