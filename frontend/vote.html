@@ -42,58 +42,34 @@
     </div>
     <!-- Spinner End -->
 
-
-    <!-- Topbar Start -->
-    <div class="container-fluid bg-primary text-white d-none d-lg-flex">
-        <div class="container py-3">
-            <div class="d-flex align-items-center">
-                <a href="index.html">
-                    <h2 class="text-white fw-bold m-0">SAIB bank</h2>
-                </a>
-                <div class="ms-auto d-flex align-items-center">
-                    <small class="ms-4"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</small>
-                    <small class="ms-4"><i class="fa fa-envelope me-3"></i>info@example.com</small>
-                    <small class="ms-4"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</small>
-                    <div class="ms-3 d-flex">
-                        <a class="btn btn-sm-square btn-light text-primary rounded-circle ms-2" href=""><i
-                                class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-sm-square btn-light text-primary rounded-circle ms-2" href=""><i
-                                class="fab fa-twitter"></i></a>
-                        <a class="btn btn-sm-square btn-light text-primary rounded-circle ms-2" href=""><i
-                                class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Topbar End -->
-
-
     <!-- Navbar Start -->
-    <div class="container-fluid bg-white sticky-top">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg bg-white navbar-light p-lg-0">
-                <a href="index.html" class="navbar-brand d-lg-none">
-                    <h1 class="fw-bold m-0">SAIB</h1>
-                </a>
-                <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse"
-                    data-bs-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav">
-                        <a href="index.html" class="nav-item nav-link">Home</a>
-                        <a href="vote.html" class="nav-item nav-link active">Vote</a>
-                        <a href="History_vote.html" class="nav-item nav-link">History vote</a>
-                        <a href="ranking.html" class="nav-item nav-link">Ranking</a>
-                        <a href="History_ranking.html" class="nav-item nav-link">History Ranking</a>
-                        <a href="login.html" class="nav-item nav-link">Login</a>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </div>
-    <!-- Navbar End -->   
+    <div id="navbar-container"></div>
+    <script>
+        // Function to fetch and insert navbar content
+        function includeNavbar() {
+            fetch('navbar.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('navbar-container').innerHTML = data;
+
+                    // Set the active class for the current page
+                    const currentPage = window.location.pathname.split('/').pop();
+                    const navbarLinks = document.querySelectorAll('#navbar-container .nav-item.nav-link');
+                    navbarLinks.forEach(link => {
+                        if (link.getAttribute('href').split('/').pop() === currentPage) {
+                            link.classList.add('active');
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching navbar content:', error);
+                });
+        }
+
+        // Call the function to include the navbar when the page loads
+        window.addEventListener('load', includeNavbar);
+    </script>
+    <!-- Navbar End -->
 
     <!-- Voting Section -->
     <section class="container py-5">
@@ -111,8 +87,18 @@
                         </div>
                         <div class="mt-4">
                             <h5>Members</h5>
-                            <div class="member-list" id="memberList">
-                                <!-- Placeholder for dynamically populated member list -->
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Employee Name</th>
+                                            <th scope="col">Vote</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="memberList">
+                                        <!-- Placeholder for dynamically populated member list -->
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -122,35 +108,29 @@
     </section>
     <!-- End Voting Section -->
 
-    <div class="container-fluid bg-dark footer mt-5 py-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container py-5">
-            <div class="row g-5">
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="text-white mb-4">Our Office</h4>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
-                    <div class="d-flex pt-3">
-                        <a class="btn btn-square btn-light rounded-circle me-2" href=""><i
-                                class="fab fa-twitter"></i></a>
-                        <a class="btn btn-square btn-light rounded-circle me-2" href=""><i
-                                class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-square btn-light rounded-circle me-2" href=""><i
-                                class="fab fa-youtube"></i></a>
-                        <a class="btn btn-square btn-light rounded-circle me-2" href=""><i
-                                class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Footer Start -->
+    <div id="footer-container"></div>
+    <script>
+        // Function to fetch and insert footer content
+        function includeFooter() {
+            fetch('footer.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer-container').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('Error fetching footer content:', error);
+                });
+        }
 
+        // Call the function to include the footer when the page loads
+        window.addEventListener('load', includeFooter);
+    </script>
+    <!-- Footer End -->
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
             class="bi bi-arrow-up"></i></a>
-
 
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -175,22 +155,26 @@
 
             // Placeholder code to retrieve member data from the database
             // Replace this code with your own implementation to fetch and populate member data dynamically
-            const members = [
-                { name: 'Member 1', id: 1 },
-                { name: 'Member 2', id: 2 },
-                { name: 'Member 3', id: 3 },
-                { name: 'Member 4', id: 4 },
-            ];
 
             // Filter members based on search value
             const filteredMembers = members.filter(member => member.name.toLowerCase().includes(searchValue.toLowerCase()));
 
             // Display the filtered members
             filteredMembers.forEach(member => {
-                const memberElement = document.createElement('div');
-                memberElement.classList.add('member');
-                memberElement.textContent = member.name;
-                memberList.appendChild(memberElement);
+                const row = document.createElement('tr');
+                const nameCell = document.createElement('td');
+                const voteCell = document.createElement('td');
+                const voteButton = document.createElement('button');
+
+                nameCell.textContent = member.name;
+                voteButton.textContent = 'Vote';
+                voteButton.classList.add('btn', 'btn-primary', 'vote-btn');
+                voteButton.setAttribute('data-employee-id', member.id);
+
+                row.appendChild(nameCell);
+                row.appendChild(voteCell);
+                voteCell.appendChild(voteButton);
+                memberList.appendChild(row);
             });
         }
     </script>
