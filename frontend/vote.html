@@ -93,6 +93,9 @@
                                         <tr>
                                             <th scope="col">Employee Name</th>
                                             <th scope="col">Vote</th>
+                                            <div id="employees">
+
+                                            </div>
                                         </tr>
                                     </thead>
                                     <tbody id="memberList">
@@ -145,6 +148,26 @@
     <script src="js/main.js"></script>
 
     <script>
+        //let x  = sessionStorage.getItem("empID");
+        console.log(sessionStorage.getItem("id"));
+        //console.log(x);
+        var myDiv = document.getElementById('employees');
+        var d = document.createElement("div");
+        var text = ""
+        $.ajax({
+                url: 'https://localhost:7072/api/Employees/getEmployees',
+                contentType: 'application/json',
+                cache: false,
+                method: 'GET',
+                dataType: 'json',
+                data: {empID: sessionStorage.getItem("id")},
+                success: function(data) {
+                    console.log(data);
+                },
+                error: function(err){
+                    console.log(err);
+                }
+            });
         // Function to search for members
         function searchMembers() {
             const searchValue = document.getElementById('search').value;

@@ -113,7 +113,7 @@
                 dataType: 'json',
                 data: JSON.stringify(login),
                 success: function(data) {
-
+                    sessionStorage.setItem("id", data.id);
                     if(data.role == "Employee"){
                         window.location.href = "index.html";
                     }else if(data.role == "Manager"){
