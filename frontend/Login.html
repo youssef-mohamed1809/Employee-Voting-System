@@ -113,8 +113,13 @@
                 dataType: 'json',
                 data: JSON.stringify(login),
                 success: function(data) {
-                    sessionStorage.setItem("empID", JSON.stringify(data));
-                    window.location.href = "index.html";
+
+                    if(data.role == "Employee"){
+                        window.location.href = "index.html";
+                    }else if(data.role == "Manager"){
+                        //Manager view
+                    }
+                    
                 },
                 error: function(err){
                     alert("Invalid login");

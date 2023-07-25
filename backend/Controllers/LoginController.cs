@@ -1,4 +1,5 @@
 ﻿using backend.Models;
+using backend.Models.API_Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,34 +11,51 @@ namespace backend.Controllers
     public class LoginController : ControllerBase
     {
         [HttpPost]
-        public async Task<ActionResult<bool>> Login(APILogin login)
+        public async Task<ActionResult<APIEmployee>> Login(APILogin login)
         { 
-            int empID = validateLogin(login.username, login.password);
+            APIEmployee e = validateLogin(login.username, login.password);
 
-            if(empID != -1) {
-                return Ok(empID);
+            if(e == null)
+            {
+                return BadRequest();
             }
-            return BadRequest();
+            
+            return Ok(e);
         }
 
 
         /*NON ACTION FUNCTIONS*/
         [NonAction]
-        public int validateLogin(string username, string password)
+        public APIEmployee validateLogin(string username, string password)
         {
             List<Employee> employees = new List<Employee>();
+            List<Manager> managers = new List<Manager>();
             using(var dbContext = new BankdbContext())
             {
                 employees = dbContext.Employee.ToList();
+                managers = dbContext.Manager.ToList();
                 
             }
             foreach(var employee in employees)
             {
                 if(employee.Username == username && employee.Password == password) { 
-                   return employee.EmpId;
+                    APIEmployee employee1 = new APIEmployee();
+                    employee1.id = employee.EmpId;
+                    employee1.role = "Employee";
+                   return employee1;
                 }
             }
-            return -1;
+            foreach (var manager in managers)
+            {
+                if (manager.Username == username && manager.Password == password)
+                {
+                    APIEmployee employee1 = new APIEmployee();
+                    employee1.id = manager.Id;
+                    employee1.role = "Manager";
+                    return employee1;
+                }
+            }
+            return null;
         }
     }
 }
