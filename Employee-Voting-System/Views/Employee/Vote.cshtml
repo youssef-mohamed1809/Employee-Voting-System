@@ -1,31 +1,36 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Vote";
 }
+
 @Html.Partial("_EmployeeNavBar")
 
 <h1>@ViewBag.idd</h1>
 
 <div id="names"></div>
-<!-- Voting Section -->
+
 <section class="container py-5">
     <div class="row justify-content-center">
         <div class="col-lg-6">
             <div class="card shadow">
                 <div class="card-body">
                     <h3 class="card-title text-center mb-4">Voting</h3>
-                    <div class="search-box">
-                        <i class="material-icons">&#xE8B6;</i>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="material-icons">&#xE8B6;</i></span>
                         <input type="text" id="search" class="form-control" placeholder="Search...">
                     </div>
-                    <div class="text-center">
-                        <button type="button" class="btn btn-primary" onclick="searchMembers()">Search</button>
-                    </div>
                     <div class="mt-4">
-                        <h5>Members</h5>
-                        <div class="member-list" id="memberList">
-                            <!-- Placeholder for dynamically populated member list -->
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Employee Name</th>
+                                        <th scope="col">Vote</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="memberList">
+                                    <!-- Placeholder for dynamically populated member list -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -33,7 +38,6 @@
         </div>
     </div>
 </section>
-<!-- End Voting Section -->
 
 <div class="container-fluid bg-dark footer mt-5 py-5 wow fadeIn" data-wow-delay="0.1s">
     <div class="container py-5">
@@ -68,9 +72,6 @@
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
 
-
-"<div class='card' style='width: 20%;'><div class='card-body'><h5 class='card-title'>" + employees[i].Name + "</h5><a href="#" class="btn btn-primary" onclick='handleClick(" + employees[i].EmpId +")'>Vote</a></div></div>"
-
 <script>
     var employees;
     $.ajax({
@@ -80,11 +81,11 @@
             //debugger;
             
             employees = JSON.parse(response);
+            //console.log(myResponse);
             const memberList = document.getElementById('memberList');
             var output = "";
             for (var i = 0; i < employees.length; i++) {
-                output += "<div class='card' style = 'width: 50%'><div class='card-body'><h5 class='card-title'>" + employees[i].Name + "</h5><button type='submit' class='btn btn-primary' onclick='handleClick(" + employees[i].EmpId +")'>Vote</button ></div></div>"
-                output += "<br/>"
+                output += "<h1>" + employees[i].Name + "</h1>"
             }
             memberList.innerHTML = output;
             alert("Success");
@@ -95,30 +96,20 @@
 
     })
 
+            $(document).on('click', '.vote-btn', function () {
+                const employeeId = $(this).data('employee-id');
+                // Perform your voting logic here, e.g., call an API endpoint to record the vote.
+                // You can use AJAX to send the vote data to the server.
+                // You can also show a success message or update the UI after the vote is recorded.
+            });
 
-
-    function handleClick(id){
-        alert(id);
-        $.ajax({
-            type: "POST",
-            url: "@Url.Action("sendEmployeeID", "Employee")",
-            data: {chosenID: id},
-            contentType: "text/plain",
-            dataType: 'text',
-            success: function(result, status){
-                alert("Siuuu");
-            },
-            error: function(result, status){
-                console.log(result);
-                
-                alert("Oh NO");
-            }
-            
-        })
+    /*const memberList = document.getElementById('memberList');
+    var output = "";
+    for(var i = 0; i < employees.length; i++){
+        output += "<h1>" + employees[i].Name +"</h1>"
     }
+    memberList.innerHTML = output;*/
 
-
-    /*Search Function Needs to be Fixed*/
     // Function to search for members
     function searchMembers() {
         const searchValue = document.getElementById('search').value;
@@ -129,19 +120,17 @@
 
         // Placeholder code to retrieve member data from the database
         // Replace this code with your own implementation to fetch and populate member data dynamically
-        //const members = employees
+        const members = employees
 
         // Filter members based on search value
-        const filteredMembers = members.filter(member => member.Name.toLowerCase().includes(searchValue.toLowerCase()));
+        const filteredMembers = members.filter(member => member.name.toLowerCase().includes(searchValue.toLowerCase()));
 
         // Display the filtered members
         filteredMembers.forEach(member => {
             const memberElement = document.createElement('div');
             memberElement.classList.add('member');
-            memberElement.textContent = member.Name;
+            memberElement.textContent = member.name;
             memberList.appendChild(memberElement);
         });
-    }
-</script>
-
-
+    </script>
+}

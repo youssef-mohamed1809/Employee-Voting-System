@@ -1,6 +1,6 @@
 /********** Template CSS **********/
 :root {
-    --primary: #4761FF;
+    --primary: #FF0000;
     --secondary: #555555;
     --light: #F1F3FA;
     --dark: #1C2035;
@@ -138,7 +138,12 @@
 
 
 /*** Header ***/
-.carousel-caption {
+/* Update the --primary variable to the desired red color */
+:root {
+    --primary: red;
+  }
+  
+  .carousel-caption {
     top: 0;
     left: 0;
     right: 0;
@@ -147,50 +152,41 @@
     align-items: center;
     background: rgba(0, 0, 0, .1);
     z-index: 1;
-}
-
-.carousel-control-prev,
-.carousel-control-next {
+  }
+  
+  .carousel-control-prev,
+  .carousel-control-next {
     width: 15%;
-}
-
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
+  }
+  
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
     width: 3.5rem;
     height: 3.5rem;
     border-radius: 3.5rem;
-    background-color: var(--primary);
-    border: 15px solid var(--primary);
-}
-
-@media (max-width: 768px) {
-    #header-carousel .carousel-item {
-        position: relative;
-        min-height: 450px;
-    }
-    
-    #header-carousel .carousel-item img {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-}
-
-.page-header {
+    background-color: var(--primary); /* Use --primary variable for background color */
+    border: 15px solid var(--primary); /* Use --primary variable for border color */
+  }
+  
+  @media (max-width: 768px) {
+    /* Existing styles for responsive view */
+  }
+  
+  .page-header {
     background: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .1)), url(../img/carousel-1.jpg) center center no-repeat;
     background-size: cover;
-}
-
-.page-header .breadcrumb-item+.breadcrumb-item::before {
+  }
+  
+  .page-header .breadcrumb-item+.breadcrumb-item::before {
     color: var(--light);
-}
-
-.page-header .breadcrumb-item,
-.page-header .breadcrumb-item a {
+  }
+  
+  .page-header .breadcrumb-item,
+  .page-header .breadcrumb-item a {
     font-size: 18px;
     color: var(--light);
-}
+  }
+  
 
 
 /*** Features ***/
