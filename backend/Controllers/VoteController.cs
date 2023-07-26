@@ -24,6 +24,7 @@ namespace backend.Controllers
 
             using(var dbContext = new BankdbContext())
             {
+                //Get Department ID
                 foreach(var employee in dbContext.Employee)
                 {
                     if(employee.EmpId ==  v.votedID) {
@@ -31,7 +32,20 @@ namespace backend.Controllers
                         break;
                     }
                 }
-                dbContext.Votings.Add(votingDB);
+                bool exists = false;
+                foreach(var voting in dbContext.Votings)
+                {
+                    if(voting.EmpId == v.voterID && votingDB.Year == DateTime.Now.Year)
+                    {
+                        exists = true;
+                        voting.VotedEmpId = v.votedID;
+                    }
+                }
+
+                if (!exists)
+                {
+                    dbContext.Votings.Add(votingDB);
+                }
                 dbContext.SaveChanges();
             }
             

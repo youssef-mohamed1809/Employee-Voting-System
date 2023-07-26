@@ -282,7 +282,21 @@
                         }
                       );
                     }else{
-                      alert("You have already voted");
+                      if(confirm("Are you sure you want to change your vote?")){
+                        
+                        submitVote(employee, vote).then(
+                          function(value){
+                          alert("Vote updated successfully");
+                        },
+                        function(err){
+                          console.log(err);
+                          alert("An error ocurred, please try again");
+                        }
+                        )
+
+                      }else{
+                        console.log("Vote Cancelled");
+                      }
                     }
                   }
                 );
