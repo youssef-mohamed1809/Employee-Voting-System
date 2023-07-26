@@ -14,6 +14,7 @@
     z-index: 99;
 }
 
+
 .fw-medium {
     font-weight: 500;
 }
@@ -32,6 +33,10 @@
     visibility: visible;
     opacity: 1;
 }
+
+#loadingScreen {
+    display: none;
+  }
 
 
 /*** Button ***/
