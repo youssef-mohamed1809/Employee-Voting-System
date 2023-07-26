@@ -221,6 +221,7 @@
         }
       });
       function login() {
+        console.log("jh");
         var username = document.getElementById("username").value;
         var password = document.getElementById("password").value;
         let login = {
@@ -235,11 +236,14 @@
           dataType: "json",
           data: JSON.stringify(login),
           success: function (data) {
-            sessionStorage.setItem("id", data.id);
+            sessionStorage.setItem("id", data.empId);
             sessionStorage.setItem("role", data.role);
             sessionStorage.setItem("name", data.name);
+            sessionStorage.setItem("depID", data.depID);
 
             if (data.role == "Employee") {
+              //Employee View
+              
               window.location.href = "Employee/home-logged-in.html";
             } else if (data.role == "Manager") {
               //Manager view

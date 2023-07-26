@@ -220,20 +220,7 @@
     <script src="../js/main.js"></script>
 
     <script>
-      $.ajax({
-        url: "https://localhost:7072/api/Employees/getEmployees",
-        contentType: "application/json",
-        cache: false,
-        method: "GET",
-        dataType: "json",
-        data: { empID: sessionStorage.getItem("id") },
-        success: function (data) {
-          console.log(data);
-        },
-        error: function (err) {
-          console.log(err);
-        },
-      });
+
     </script>
   </body>
 </html>

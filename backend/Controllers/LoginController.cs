@@ -30,7 +30,7 @@ namespace backend.Controllers
         {
             List<Employee> employees = new List<Employee>();
             List<Manager> managers = new List<Manager>();
-            APIEmployee employee1 = new APIEmployee();
+            //Employee employee1 = new APIEmployee();
             using (var dbContext = new BankdbContext())
             {
                 employees = dbContext.Employee.ToList();
@@ -40,25 +40,28 @@ namespace backend.Controllers
             foreach(var employee in employees)
             {
                 if(employee.Username == username && employee.Password == password) { 
-                    //APIEmployee employee1 = new APIEmployee();
+                    APIEmployee employee1 = new APIEmployee();
                     employee1.id = employee.EmpId;
                     employee1.name = employee.Name;
                     employee1.role = "Employee";
-                   return employee1;
+                    employee1.depID = (int)employee.DepId;
+                    return employee1;
                 }
             }
             foreach (var manager in managers)
             {
                 if (manager.Username == username && manager.Password == password)
                 {
-                    //APIEmployee employee1 = new APIEmployee();
+                    APIEmployee employee1 = new APIEmployee();
                     employee1.id = manager.Id;
                     employee1.role = "Manager";
                     employee1.name = manager.Name;
+                    employee1.depID = (int)manager.DepId;
+        
                     return employee1;
                 }
             }
-            return employee1;    
+            return null;    
         }
     }
 }

@@ -199,15 +199,38 @@
     <script src="../js/main.js"></script>
 
     <script>
+
+      var date = new Date();
+      var year = date.getFullYear();
+      let rank = {
+        depID: sessionStorage.getItem("depID"),
+        year: year
+      }
       $.ajax({
-        url: "https://localhost:7072/api/Employees/getEmployees",
+        url: "https://localhost:7072/rankingsThisYear",
         contentType: "application/json",
         cache: false,
         method: "GET",
         dataType: "json",
-        data: { empID: sessionStorage.getItem("id") },
+        data: rank,
         success: function (data) {
           console.log(data);
+          var employees = [];
+          for(var i = 0; i < data.length; i++){
+            $.ajax({
+              url: "https://localhost:7072/getEmployeeData",
+              contentType: "application/json",
+              cache: false,
+              method: "GET",
+              dataType: "json",
+              data: {empID: data[i].votedEmpID},
+              success: function(d){
+                employees[i] = d;
+              }
+            })
+          }
+          console.log(employees);
+          //Employees Array is the ranking for the current year
         },
         error: function (err) {
           console.log(err);
