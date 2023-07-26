@@ -35,35 +35,15 @@
 </head>
 
 <body>
+    <!-- Spinner Start -->
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
+    </div>
+    <!-- Spinner End -->
+
     <!-- Navbar Start -->
-    <!-- <div id="navbar-container"></div>
-    <script>
-        // Function to fetch and insert navbar content
-        function includeNavbar() {
-            fetch('navbar.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('navbar-container').innerHTML = data;
-
-                    // Set the active class for the current page
-                    const currentPage = window.location.pathname.split('/').pop();
-                    const navbarLinks = document.querySelectorAll('#navbar-container .nav-item.nav-link');
-                    navbarLinks.forEach(link => {
-                        if (link.getAttribute('href').split('/').pop() === currentPage) {
-                            link.classList.add('active');
-                        }
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching navbar content:', error);
-                });
-        }
-
-        // Call the function to include the navbar when the page loads
-        window.addEventListener('load', includeNavbar);
-    </script> -->
-
-
+    <div id="navbar-container"></div>
     <div class="container-fluid bg-primary text-white d-none d-lg-flex">
         <div class="container py-3">
             <div class="d-flex align-items-center">
@@ -100,8 +80,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav">
-                    <a href="home-logged-out.html" class="nav-item nav-link">Home</a>
-                    <a href="login.html" class="nav-item nav-link active">Login</a>
+                    <a href="/Employee/home-logged-in.html" class="nav-item nav-link">Home</a>
+                    <a href="/Employee/vote.html" class="nav-item nav-link">Vote</a>
+                    <a href="/Employee/History_vote.html" class="nav-item nav-link">History Vote</a>
+                    <a onclick="logout()" class="nav-item nav-link">Login</a>
                     <!-- other links -->
                 </div>
             </div>
@@ -110,35 +92,29 @@
 </div>
 
 
-    <!-- Navbar End -->   
+    <!-- Navbar End -->
 
-    <!-- Login Section -->
-    <section class="container py-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-6">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h3 class="card-title text-center mb-4">Login</h3>
-                        
-                            <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="text" name="username" class="form-control" id="username" placeholder="Enter your username">
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" name="password" class="form-control" id="password" placeholder="Enter your password">
-                            </div>
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary" onclick="login()">Login</button>
-                            </div>
-                        
-                    </div>
-                </div>
-            </div>
+    <!-- History Section -->
+    <section id="ranking" class="container mt-5">
+        <h2>History Votes</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Voted employee</th>
+                        <th>Year</th>
+                        <th>Department name</th>
+                    </tr>
+                </thead>
+                <tbody id="rankingTableBody">
+                    <!-- Ranking table rows will be dynamically added here -->
+                </tbody>
+            </table>
         </div>
     </section>
-    <!-- End Login Section -->
+    <!-- End Ranking Table Section -->
 
+    <!-- Footer Start -->
     <div id="footer-container"></div>
     <script>
         // Function to fetch and insert footer content
@@ -156,12 +132,11 @@
         // Call the function to include the footer when the page loads
         window.addEventListener('load', includeFooter);
     </script>
-
+    <!-- Footer End -->
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
             class="bi bi-arrow-up"></i></a>
-
 
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -175,43 +150,37 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
-
-    <!-- API Calls Script -->
     <script>
-        document.addEventListener('keypress', function(e){
-        if(e.key == "Enter"){
-                login();
-            }
-        })
-        function login(){
-            var username = document.getElementById("username").value;
-            var password = document.getElementById("password").value;
-            let login = {
-                username: username,
-                password: password
-            }
-            $.ajax({
-                url: 'https://localhost:7072/api/Login',
-                contentType: 'application/json',
-                cache: false,
-                method: 'POST',
-                dataType: 'json',
-                data: JSON.stringify(login),
-                success: function(data) {
-                    sessionStorage.setItem("id", data.id);
-                    if(data.role == "Employee"){
-                        window.location.href = "Employee/home-logged-in.html";
-                    }else if(data.role == "Manager"){
-                        //Manager view
-                        window.location.href = "Manager/home-logged-in.html"
-                    }
-                    
-                },
-                error: function(err){
-                    alert("Invalid login");
-                }
-            });
+        // Function to retrieve ranking data and populate the table
+        function getRankingData() {
+            const rankingTableBody = document.getElementById('rankingTableBody');
 
+            // Clear previous table rows
+            rankingTableBody.innerHTML = '';
+
+            // Placeholder code to retrieve ranking data from the database
+            // Replace this code with your own implementation to fetch and populate ranking data dynamically
+
+            // Create and append table rows for each ranking entry
+            rankingData.forEach(entry => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${entry.rank}</td>
+                    <td>${entry.option}</td>
+                    <td>${entry.votes}</td>
+                `;
+                rankingTableBody.appendChild(row);
+            });
+        }
+
+        // Call the function to retrieve and populate the ranking data on page load
+        getRankingData();
+    </script>
+
+    <script>
+        function logout(){
+            sessionStorage.clear();
+            window.location.href = "/Login.html";
         }
     </script>
 </body>
