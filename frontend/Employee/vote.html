@@ -138,20 +138,20 @@
 
     <!-- Voting Section -->
     <div class="mt-4">
-        <div class="table-responsive">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col">Employee Name</th>
-                <th scope="col">Vote</th>
-              </tr>
-            </thead>
-            <tbody id="memberList">
-              <!-- Placeholder for dynamically populated member list -->
-            </tbody>
-          </table>
-        </div>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Employee Name</th>
+              <th scope="col">Vote</th>
+            </tr>
+          </thead>
+          <tbody id="memberList">
+            <!-- Placeholder for dynamically populated member list -->
+          </tbody>
+        </table>
       </div>
+    </div>
     <!-- End Voting Section -->
 
     <!-- Footer Start -->
@@ -221,7 +221,6 @@
           voteButton.textContent = "Vote";
           voteButton.classList.add("btn", "btn-primary", "vote-btn");
           voteButton.setAttribute("data-employee-id", member.id);
-
           row.appendChild(nameCell);
           row.appendChild(voteCell);
           voteCell.appendChild(voteButton);
@@ -232,52 +231,116 @@
 
     <!--API Calls Script-->
     <script>
-        console.log(sessionStorage.getItem("id"));
-      
-        function fetchEmployees() {
-          var memberList = document.getElementById("memberList");
-          $.ajax({
-            url: "https://localhost:7072/api/Employees/getEmployees",
-            contentType: "application/json",
-            cache: false,
-            method: "GET",
-            dataType: "json",
-            data: { empID: sessionStorage.getItem("id") },
-            success: function (data) {
-              console.log(data);
-              // Assuming the response contains an array of objects with a 'name' property
-              data.forEach(function (employee) {
-                const row = document.createElement("tr");
-                const nameCell = document.createElement("td");
-                const voteCell = document.createElement("td");
-                const voteButton = document.createElement("button");
-      
-                nameCell.textContent = employee.name;
-                voteButton.textContent = "Vote";
-                voteButton.classList.add("btn", "btn-primary", "vote-btn");
-                voteButton.setAttribute("data-employee-id", employee.id);
-      
-                row.appendChild(nameCell);
-                row.appendChild(voteCell);
-                voteCell.appendChild(voteButton);
-                memberList.appendChild(row);
-              });
-            },
-            error: function (err) {
-              console.log(err);
-            },
-          });
-        }
-      
-        // Call fetchEmployees() to populate the member list when the page loads
-        window.addEventListener("load", fetchEmployees);
-      </script>
-      
-      <script>
-        function logout() {
-          sessionStorage.clear();
-          window.location.href = "../Login.html";
-        }
-      </script>
+      console.log(sessionStorage.getItem("id"));
+
+      function fetchEmployees() {
+        var memberList = document.getElementById("memberList");
+        $.ajax({
+          url: "https://localhost:7072/api/Employees/getEmployees",
+          contentType: "application/json",
+          cache: false,
+          method: "GET",
+          dataType: "json",
+          data: { empID: sessionStorage.getItem("id") },
+          success: function (data) {
+            console.log(data);
+            // Assuming the response contains an array of objects with a 'name' property
+            data.forEach(function (employee) {
+              const row = document.createElement("tr");
+              const nameCell = document.createElement("td");
+              const voteCell = document.createElement("td");
+              const voteButton = document.createElement("button");
+
+              nameCell.textContent = employee.name;
+              voteButton.textContent = "Vote";
+              voteButton.classList.add("btn", "btn-primary", "vote-btn");
+              voteButton.setAttribute("data-employee-id", employee.id);
+
+              row.appendChild(nameCell);
+              row.appendChild(voteCell);
+              voteCell.appendChild(voteButton);
+              memberList.appendChild(row);
+
+              let vote = {
+                voterID: sessionStorage.getItem("id"),
+                votedID: employee.empId,
+              };
+
+              voteButton.onclick = function sendVote() {
+                hasEmployeeVoted().then(
+                  function(voted){
+                    //console.log(value);
+                    if(!voted){
+                      
+                      submitVote(employee, vote).then(
+                        function(value){
+                          alert("Vote success");
+                        },
+                        function(err){
+                          console.log(err);
+                          alert("An error ocurred, please try again");
+                        }
+                      );
+                    }else{
+                      alert("You have already voted");
+                    }
+                  }
+                );
+                
+              };
+            });
+          },
+          error: function (err) {
+            console.log(err);
+          },
+        });
+      }
+
+      async function submitVote(employee, vote){
+        return $.ajax({
+          url: "https://localhost:7072/api/Vote/submitVote",
+          contentType: "application/json",
+          cache: false,
+          method: "POST",
+          dataType: "json",
+          data: JSON.stringify(vote),
+          success: function(data){
+             
+          },
+          error: function(err){
+            console.log(err);
+          }
+        })
+      }
+
+      async function hasEmployeeVoted() {
+       return $.ajax({
+          url: "https://localhost:7072/api/Vote/hasEmployeeVoted",
+          contentType: "application/json",
+          cache: false,
+          method: "GET",
+          dataType: "json",
+          data: {empID: sessionStorage.getItem("id")},
+          success: function(data){
+             
+          },
+          error: function(err){
+            console.log(err);
+          }
+        })
+
+        
+      }
+
+      // Call fetchEmployees() to populate the member list when the page loads
+      window.addEventListener("load", fetchEmployees);
+    </script>
+
+    <script>
+      function logout() {
+        sessionStorage.clear();
+        window.location.href = "../Login.html";
+      }
+    </script>
   </body>
 </html>

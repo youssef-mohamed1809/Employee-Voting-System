@@ -20,9 +20,19 @@ namespace backend.Controllers
             votingDB.EmpId = v.voterID;
             votingDB.VotedEmpId = v.votedID;
 
+
+
             using(var dbContext = new BankdbContext())
             {
+                foreach(var employee in dbContext.Employee)
+                {
+                    if(employee.EmpId ==  v.votedID) {
+                        votingDB.DepId = employee.DepId;
+                        break;
+                    }
+                }
                 dbContext.Votings.Add(votingDB);
+                dbContext.SaveChanges();
             }
             
             return Ok(true);
@@ -107,18 +117,30 @@ namespace backend.Controllers
         }
 
         [HttpGet("/rankingsThisYear")]
-        public async Task<ActionResult<APIEmployeeVote>> winner(int depID)
+        public async Task<ActionResult<APIEmployeeVote>> ranking(int depID, int? year)
         {
-            int year = DateTime.Now.Year;
-            List<Votings> ranks = new List<Votings>();
+            if(year == null)
+            {
+                year = DateTime.Now.Year;
+            }
+            List<Rank> ranks = new List<Rank>();
             using (var dbContext = new BankdbContext())
             {
-                ranks = dbContext.Votings.FromSql($"select id, count(votedEmpID) as votes from votings where depID = {depID} and year = {year} group by votedEmpID, id order by votes desc").ToList();
+                ranks = dbContext.Rank.FromSql($"select votedEmpID, count(votedEmpID) as votes from votings where depID = {depID} and year = {year} group by votedEmpID, id order by votes desc").ToList();
                 return Ok(ranks);
             }
-            
+        }
 
-            
+
+        [HttpGet("/winnerOfYear")]
+        public async Task<ActionResult<APIEmployeeVote>> winner(int depID, int year)
+        {
+            List<Rank> rank = new List<Rank>();
+            using (var dbContext = new BankdbContext())
+            {
+                rank = dbContext.Rank.FromSql($"select top 1 votedEmpID, count(votedEmpID) as votes from votings where depID = {depID} and year = {year} group by votedEmpID, id order by votes desc").ToList();
+            }
+            return Ok(rank);
         }
     }
 }
