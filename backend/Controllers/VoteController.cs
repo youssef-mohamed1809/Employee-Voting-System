@@ -106,32 +106,19 @@ namespace backend.Controllers
             return Ok(voteHistory);
         }
 
-        [HttpGet("/winnerByYear")]
-        public async Task<ActionResult<APIEmployeeVote>> winner(int depID, int year)
+        [HttpGet("/rankingsThisYear")]
+        public async Task<ActionResult<APIEmployeeVote>> winner(int depID)
         {
-            List<Votings> votings;
+            int year = DateTime.Now.Year;
+            List<Votings> ranks = new List<Votings>();
             using (var dbContext = new BankdbContext())
             {
-                votings = dbContext.Votings.FromSql($"select * from votings where depID = {depID} and year = {year}").ToList();
+                ranks = dbContext.Votings.FromSql($"select id, count(votedEmpID) as votes from votings where depID = {depID} and year = {year} group by votedEmpID, id order by votes desc").ToList();
+                return Ok(ranks);
             }
-            int max = -1;
-            int empID = -1;
-            for(int i = 0; i < votings.Count; i++)
-            {
-                int count = 0;
-                for(int j = 0; j < votings.Count; j++) {
-                    if (votings[i].VotedEmpId == votings[j].VotedEmpId) {
-                        count++;
-                    }
-                }
-                if(max < count)
-                {
-                    max = count;
-                    empID = (int)votings[i].VotedEmpId;
-                }
-            }
+            
 
-            return Ok(empID);
+            
         }
     }
 }
