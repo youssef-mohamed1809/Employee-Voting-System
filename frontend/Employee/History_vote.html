@@ -144,7 +144,6 @@
             <tr>
               <th>Voted employee</th>
               <th>Year</th>
-              <th>Department name</th>
             </tr>
           </thead>
           <tbody id="rankingTableBody">
@@ -230,14 +229,27 @@
         dataType: "json",
         data: { empID: sessionStorage.getItem("id") },
         success: function (data) {
-          console.log(data);
+          // Assuming 'data' is an array of objects with properties votedEmployee, year, and departmentName
+          const rankingTableBody = document.getElementById("rankingTableBody");
+    
+          // Clear previous table rows
+          rankingTableBody.innerHTML = "";
+    
+          // Create and append table rows for each history entry
+          data.forEach((entry) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+              <td>${entry.name}</td>
+              <td>${entry.year}</td>
+            `;
+            rankingTableBody.appendChild(row);
+          });
         },
         error: function (err) {
           console.log(err);
         },
       });
     </script>
-
     <script>
       function logout() {
         sessionStorage.clear();
