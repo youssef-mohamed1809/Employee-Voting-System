@@ -119,7 +119,7 @@
                 >Home</a
               >
               <a
-                href="../Manager/History_ranking.html"
+                href="../Manager/ranking.html"
                 class="nav-item nav-link"
                 >Rankings</a
               >
@@ -166,7 +166,7 @@
     <script>
       // Function to fetch and insert footer content
       function includeFooter() {
-        fetch("footer.html")
+        fetch("../footer.html")
           .then((response) => response.text())
           .then((data) => {
             document.getElementById("footer-container").innerHTML = data;

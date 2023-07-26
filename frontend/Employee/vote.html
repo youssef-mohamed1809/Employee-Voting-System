@@ -139,7 +139,9 @@
     <!-- Voting Section -->
     <div class="mt-4">
       <div class="table-responsive">
-        <table class="table table-striped">
+        <!-- Add this input field in the table header -->
+        <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search by name.">
+        <table class="table table-bordered table-striped">
           <thead>
             <tr>
               <th scope="col">Employee Name</th>
@@ -147,11 +149,12 @@
             </tr>
           </thead>
           <tbody id="memberList">
-            <!-- Placeholder for dynamically populated member list -->
+            <!-- Ranking table rows will be dynamically added here -->
           </tbody>
         </table>
       </div>
     </div>
+    
     <!-- End Voting Section -->
 
     <!-- Footer Start -->
@@ -334,6 +337,26 @@
 
       // Call fetchEmployees() to populate the member list when the page loads
       window.addEventListener("load", fetchEmployees);
+    </script>
+    <script>
+      // Function to filter chat history based on the search text
+      function filterChatHistory() {
+        const searchInput = document.getElementById("searchInput");
+        const searchText = searchInput.value.toLowerCase();
+    
+        const rows = document.querySelectorAll("#memberList tr");
+        rows.forEach((row) => {
+          const chatCharacter = row.querySelector("td:nth-child(1)").innerText.toLowerCase();
+          if (chatCharacter.includes(searchText)) {
+            row.style.display = "table-row";
+          } else {
+            row.style.display = "none";
+          }
+        });
+      }
+    
+      // Attach the filterChatHistory function to the input field's "input" event
+      document.getElementById("searchInput").addEventListener("input", filterChatHistory);
     </script>
 
     <script>
