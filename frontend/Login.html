@@ -236,6 +236,9 @@
           data: JSON.stringify(login),
           success: function (data) {
             sessionStorage.setItem("id", data.id);
+            sessionStorage.setItem("role", data.role);
+            sessionStorage.setItem("name", data.name);
+
             if (data.role == "Employee") {
               window.location.href = "Employee/home-logged-in.html";
             } else if (data.role == "Manager") {

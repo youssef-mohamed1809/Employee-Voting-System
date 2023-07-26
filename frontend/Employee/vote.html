@@ -140,7 +140,12 @@
     <div class="mt-4">
       <div class="table-responsive">
         <!-- Add this input field in the table header -->
-        <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search by name.">
+        <input
+          type="text"
+          id="searchInput"
+          class="form-control mb-3"
+          placeholder="Search by name."
+        />
         <table class="table table-bordered table-striped">
           <thead>
             <tr>
@@ -154,7 +159,7 @@
         </table>
       </div>
     </div>
-    
+
     <!-- End Voting Section -->
 
     <!-- Footer Start -->
@@ -270,42 +275,40 @@
               };
 
               voteButton.onclick = function sendVote() {
-                hasEmployeeVoted().then(
-                  function(voted){
+                hasEmployeeVoted()
+                  .then(function (voted) {
                     //console.log(value);
-                    if(!voted){
-                      
+                    if (!voted) {
                       submitVote(employee, vote).then(
-                        function(value){
+                        function (value) {
                           alert("Vote success");
                         },
-                        function(err){
+                        function (err) {
                           console.log(err);
                           alert("An error ocurred, please try again");
                         }
                       );
-                    }else{
-                      if(confirm("Are you sure you want to change your vote?")){
-                        
+                    } else {
+                      if (
+                        confirm("Are you sure you want to change your vote?")
+                      ) {
                         submitVote(employee, vote).then(
-                          function(value){
-                          alert("Vote updated successfully");
-                        },
-                        function(err){
-                          console.log(err);
-                          alert("An error ocurred, please try again");
-                        }
-                        )
-
-                      }else{
+                          function (value) {
+                            alert("Vote updated successfully");
+                          },
+                          function (err) {
+                            console.log(err);
+                            alert("An error ocurred, please try again");
+                          }
+                        );
+                      } else {
                         console.log("Vote Cancelled");
                       }
                     }
-                  }
-                ).catch(function(err){
-                  console.log(err);
-                });
-                
+                  })
+                  .catch(function (err) {
+                    console.log(err);
+                  });
               };
             });
           },
@@ -315,7 +318,7 @@
         });
       }
 
-      async function submitVote(employee, vote){
+      async function submitVote(employee, vote) {
         return $.ajax({
           url: "https://localhost:7072/api/Vote/submitVote",
           contentType: "application/json",
@@ -323,47 +326,43 @@
           method: "POST",
           dataType: "json",
           data: JSON.stringify(vote),
-          success: function(data){
-             
-          },
-          error: function(err){
+          success: function (data) {},
+          error: function (err) {
             console.log(err);
-          }
-        })
+          },
+        });
       }
 
       async function hasEmployeeVoted() {
-       return $.ajax({
+        return $.ajax({
           url: "https://localhost:7072/api/Vote/hasEmployeeVoted",
           contentType: "application/json",
           cache: false,
           method: "GET",
           dataType: "json",
-          data: {empID: sessionStorage.getItem("id")},
-          success: function(data){
-             
-          },
-          error: function(err){
+          data: { empID: sessionStorage.getItem("id") },
+          success: function (data) {},
+          error: function (err) {
             console.log(err);
-          }
-        })
-
-        
+          },
+        });
       }
 
       // Call fetchEmployees() to populate the member list when the page loads
       window.addEventListener("load", fetchEmployees);
     </script>
-    
+
     <script>
       // Function to filter chat history based on the search text
       function filterChatHistory() {
         const searchInput = document.getElementById("searchInput");
         const searchText = searchInput.value.toLowerCase();
-    
+
         const rows = document.querySelectorAll("#memberList tr");
         rows.forEach((row) => {
-          const chatCharacter = row.querySelector("td:nth-child(1)").innerText.toLowerCase();
+          const chatCharacter = row
+            .querySelector("td:nth-child(1)")
+            .innerText.toLowerCase();
           if (chatCharacter.includes(searchText)) {
             row.style.display = "table-row";
           } else {
@@ -371,9 +370,11 @@
           }
         });
       }
-    
+
       // Attach the filterChatHistory function to the input field's "input" event
-      document.getElementById("searchInput").addEventListener("input", filterChatHistory);
+      document
+        .getElementById("searchInput")
+        .addEventListener("input", filterChatHistory);
     </script>
 
     <script>

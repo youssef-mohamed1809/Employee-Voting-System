@@ -140,7 +140,12 @@
       <h2>History Votes</h2>
       <div class="table-responsive">
         <!-- Add this input field in the table header -->
-        <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search by name.">
+        <input
+          type="text"
+          id="searchInput"
+          class="form-control mb-3"
+          placeholder="Search by name."
+        />
         <table class="table table-bordered table-striped">
           <thead>
             <tr>
@@ -154,7 +159,7 @@
         </table>
       </div>
     </section>
-    
+
     <!-- End Ranking Table Section -->
 
     <!-- Footer Start -->
@@ -234,10 +239,10 @@
         success: function (data) {
           // Assuming 'data' is an array of objects with properties votedEmployee, year, and departmentName
           const rankingTableBody = document.getElementById("rankingTableBody");
-    
+
           // Clear previous table rows
           rankingTableBody.innerHTML = "";
-    
+
           // Create and append table rows for each history entry
           data.forEach((entry) => {
             const row = document.createElement("tr");
@@ -258,10 +263,12 @@
       function filterChatHistory() {
         const searchInput = document.getElementById("searchInput");
         const searchText = searchInput.value.toLowerCase();
-    
+
         const rows = document.querySelectorAll("#rankingTableBody tr");
         rows.forEach((row) => {
-          const chatCharacter = row.querySelector("td:nth-child(1)").innerText.toLowerCase();
+          const chatCharacter = row
+            .querySelector("td:nth-child(1)")
+            .innerText.toLowerCase();
           if (chatCharacter.includes(searchText)) {
             row.style.display = "table-row";
           } else {
@@ -269,19 +276,23 @@
           }
         });
       }
-    
+
       // Attach the filterChatHistory function to the input field's "input" event
-      document.getElementById("searchInput").addEventListener("input", filterChatHistory);
+      document
+        .getElementById("searchInput")
+        .addEventListener("input", filterChatHistory);
     </script>
     <script>
       // Function to filter history data based on the search text
       function filterHistoryData() {
         const searchInput = document.getElementById("searchInput");
         const searchText = searchInput.value.toLowerCase();
-    
+
         const rows = document.querySelectorAll("#rankingTableBody tr");
         rows.forEach((row) => {
-          const votedEmployee = row.querySelector("td:nth-child(1)").innerText.toLowerCase();
+          const votedEmployee = row
+            .querySelector("td:nth-child(1)")
+            .innerText.toLowerCase();
           if (votedEmployee.includes(searchText)) {
             row.style.display = "table-row";
           } else {
@@ -289,11 +300,13 @@
           }
         });
       }
-    
+
       // Attach the filterHistoryData function to the input field's "input" event
-      document.getElementById("searchInput").addEventListener("input", filterHistoryData);
+      document
+        .getElementById("searchInput")
+        .addEventListener("input", filterHistoryData);
     </script>
-    
+
     <script>
       function logout() {
         sessionStorage.clear();

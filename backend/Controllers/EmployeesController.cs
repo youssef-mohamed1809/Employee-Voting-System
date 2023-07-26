@@ -1,4 +1,5 @@
 ﻿using backend.Models;
+using backend.Models.API_Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -38,5 +39,33 @@ namespace backend.Controllers
             }
             return Ok(employees);
         }
+        /*
+        [HttpGet("/getEmployeeData")]
+        public async Task<ActionResult<int>> getEmployeeData(int empID)
+        {
+            APIEmployee employee = new APIEmployee();
+            using(var dbContext = new BankdbContext())
+            {
+                foreach(var e in dbContext.Employee.ToList())
+                {
+                    if(e.EmpId == empID)
+                    {
+                        employee.name = e.Name;
+                        employee.id = e.EmpId;
+                        employee.role = "Employee";
+                    }
+                }
+                foreach(var m in dbContext.Manager.ToList())
+                {
+                    if(m.Id == empID)
+                    {
+                        employee.name = m.Name;
+                        employee.id = m.Id;
+                        employee.role = "Manager";
+                    }
+                }
+            }
+            return Ok(employee);
+        }*/
     }
 }

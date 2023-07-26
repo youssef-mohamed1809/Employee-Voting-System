@@ -16,4 +16,6 @@ public partial class VotingYear
     public DateTime? StartDate { get; set; }
 
     public DateTime? EndDate { get; set; }
+
+    public bool? status { get; set; }
 }

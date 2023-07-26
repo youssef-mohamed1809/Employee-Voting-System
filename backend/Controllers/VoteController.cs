@@ -70,7 +70,7 @@ namespace backend.Controllers
             DateTime now = DateTime.Now;
             foreach(var votingYear in votingYears)
             {
-                if(votingYear.Year == DateTime.Now.Year && (votingYear.StartDate < now && votingYear.EndDate > now))
+                if(votingYear.Year == DateTime.Now.Year && (votingYear.StartDate < now && votingYear.EndDate > now) && (bool)votingYear.status)
                 {
                     return Ok(true);
                 }
