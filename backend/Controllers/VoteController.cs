@@ -35,7 +35,7 @@ namespace backend.Controllers
                 bool exists = false;
                 foreach(var voting in dbContext.Votings)
                 {
-                    if(voting.EmpId == v.voterID && votingDB.Year == DateTime.Now.Year)
+                    if(voting.EmpId == v.voterID && voting.Year == DateTime.Now.Year)
                     {
                         exists = true;
                         voting.VotedEmpId = v.votedID;
