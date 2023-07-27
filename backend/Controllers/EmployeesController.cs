@@ -31,10 +31,10 @@ namespace backend.Controllers
             }
             for (int i = 0; i < employees.Count; i++)
             {
+                employees[i].Password = "";
                 if (empID == employees[i].EmpId)
                 {
                     employees.RemoveAt(i);
-                    break;
                 }
             }
             return Ok(employees);
@@ -50,6 +50,7 @@ namespace backend.Controllers
                 {
                     if(e.EmpId == empID)
                     {
+                        e.Password = "";
                         return Ok(e);
                     }
                 }

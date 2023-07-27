@@ -214,7 +214,7 @@
         dataType: "json",
         data: rank,
         success: function (data) {
-          console.log(data);
+          
           var employees = [];
           for(var i = 0; i < data.length; i++){
             $.ajax({
@@ -229,6 +229,7 @@
               }
             })
           }
+          console.log(employees);
           console.log(employees);
           //Employees Array is the ranking for the current year
         },

@@ -220,7 +220,76 @@
     <script src="../js/main.js"></script>
 
     <script>
+        async function getEmployeeData(id){
+          return $.ajax({
+              url: "https://localhost:7072/getEmployeeData",
+              contentType: "application/json",
+              cache: false,
+              method: "GET",
+              dataType: "json",
+              data: {empID: id},
+              success: function(data){}
+            })
+        }
 
+        async function winnerOfCertainYear(year){
+          return $.ajax({
+            url: "https://localhost:7072/winnerOfYear",
+            contentType: "application/json",
+            cache: false,
+            method: "GET",
+            dataType: "json",
+            data: {depID: sessionStorage.getItem("depID"), year: year},
+            success: function(data){},
+            error: function(err){console.log(err);}
+          })
+        }
+
+        async function winnerOfAllYears(){
+          var date = new Date();
+          year = date.getFullYear();
+          var winners = [];
+          while(year >= 2019){
+            winnerOfCertainYear(year).then(
+
+              function(winner){
+                //console.log(winner);
+                winnerID = winner[0].votedEmpID;
+                votes = winner.votes;
+                //console.log(winnerID);
+                getEmployeeData(winnerID).then(
+                  function(data){
+                    console.log(data);
+                    let e = {
+                      name: data.name,
+                      id: data.empId,
+                      votes: votes,
+                      year: year
+                    }
+                    winners.push(e);
+                  }
+                )
+              }
+            )
+            year--;
+          }
+        return winners;  
+        }
+
+        winnerOfAllYears().then(
+          function(data){
+            console.log(data);
+            /*
+              data object attributes: empID, name, depId, username
+            */
+          }
+        )        
+      function logout() {
+        sessionStorage.clear();
+        window.location.href = "../Login.html";
+      }
     </script>
+
+
   </body>
 </html>
