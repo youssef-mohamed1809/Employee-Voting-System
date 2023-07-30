@@ -240,7 +240,8 @@
             method: "GET",
             dataType: "json",
             data: {depID: sessionStorage.getItem("depID"), year: year},
-            success: function(data){},
+            success: function(data){
+            },
             error: function(err){console.log(err);}
           })
         }
@@ -250,23 +251,22 @@
           year = date.getFullYear();
           var winners = [];
           while(year >= 2019){
-            winnerOfCertainYear(year).then(
+            await winnerOfCertainYear(year).then(
 
-              function(winner){
-                //console.log(winner);
+              async function(winner){
                 winnerID = winner[0].votedEmpID;
-                votes = winner.votes;
-                //console.log(winnerID);
-                getEmployeeData(winnerID).then(
+                
+                
+                await getEmployeeData(winnerID).then(
                   function(data){
-                    console.log(data);
                     let e = {
                       name: data.name,
                       id: data.empId,
-                      votes: votes,
+                      votes: winner[0].votes,
                       year: year
                     }
                     winners.push(e);
+                    
                   }
                 )
               }
@@ -279,9 +279,6 @@
         winnerOfAllYears().then(
           function(data){
             console.log(data);
-            /*
-              data object attributes: empID, name, depId, username
-            */
           }
         )        
       function logout() {
