@@ -1,4 +1,9 @@
 /********** Template CSS **********/
+#red{
+    background-color: red;
+}
+
+
 :root {
     --primary: #FF0000;
     --secondary: #555555;
