@@ -142,16 +142,26 @@
     <section id="ranking" class="container mt-5">
       <h2>Ranking Table</h2>
       <div class="table-responsive">
+        <div class="input-group mb-3">
+          <span class="input-group-text"><i class="bi bi-search"></i></span>
+          <input
+            id="searchInput"
+            type="text"
+            class="form-control"
+            placeholder="Search by Employee Name"
+          />
+        </div>
         <table class="table table-bordered table-striped">
           <thead>
             <tr>
-              <th>Position</th>
-              <th>Name</th>
+              <th>Rank</th>
+              <th>Employee Name</th>
+              <th>Number of Votes</th>
             </tr>
           </thead>
           <tbody id="rankingTableBody">
             <!-- Ranking table rows will be dynamically added here -->
- 
+    
           </tbody>
         </table>
       </div>
@@ -199,13 +209,13 @@
     <script src="../js/main.js"></script>
 
     <script>
-
       var date = new Date();
       var year = date.getFullYear();
       let rank = {
         depID: sessionStorage.getItem("depID"),
-        year: year
-      }
+        year: year,
+      };
+    
       $.ajax({
         url: "https://localhost:7072/rankingsThisYear",
         contentType: "application/json",
@@ -214,41 +224,74 @@
         dataType: "json",
         data: rank,
         success: function (data) {
-          
           var employees = [];
-          for(var i = 0; i < data.length; i++){
+          var tableBody = ""; // Initialize an empty string to store the table rows
+    
+          // Loop through the data to fetch employee details using AJAX requests
+          for (var i = 0; i < data.length; i++) {
             $.ajax({
               url: "https://localhost:7072/getEmployeeData",
               contentType: "application/json",
               cache: false,
               method: "GET",
               dataType: "json",
-              data: {empID: data[i].votedEmpID},
-              success: function(d){
-                employees[i] = d;
-                employees[i].votes = data[i].votes
-              }
-            })
-          }
-          //console.log(employees);
-          console.log(employees);
-          
-          //Employees Array is the ranking for the current year
-          tableBody = document.getElementById("rankingTableBody").innerHTML;
-          for(var i = 0; i < employees.length; i++){
-            console.log(i);
-            tableBody += 
-            `<tr>
-                <th>${i}</th>
-                <th>${employee.name}</th>
-                
-              </tr>`
+              data: { empID: data[i].votedEmpID },
+              success: function (employeeData) {
+                employees.push(employeeData);
+                employees[employees.length - 1].votes = data[employees.length - 1].votes;
+    
+                // If all employee details have been fetched, populate the table
+                if (employees.length === data.length) {
+                  // Sort the employees array based on votes in descending order
+                  employees.sort(function (a, b) {
+                    return b.votes - a.votes;
+                  });
+    
+                  // Generate the table rows dynamically
+                  for (var j = 0; j < employees.length; j++) {
+                    tableBody +=
+                      `<tr>
+                        <td>${j + 1}</td>
+                        <td>${employees[j].name}</td>
+                        <td>${employees[j].votes}</td>
+                      </tr>`;
+                  }
+    
+                  // Add the rows to the table body
+                  $("#rankingTableBody").html(tableBody);
+                }
+              },
+            });
           }
         },
         error: function (err) {
           console.log(err);
         },
       });
+    </script>
+    <script>
+      // Function to filter chat history based on the search text
+      function filterChatHistory() {
+        const searchInput = document.getElementById("searchInput");
+        const searchText = searchInput.value.toLowerCase();
+
+        const rows = document.querySelectorAll("#rankingTableBody tr");
+        rows.forEach((row) => {
+          const chatCharacter = row
+            .querySelector("td:nth-child(2)")
+            .innerText.toLowerCase();
+          if (chatCharacter.includes(searchText)) {
+            row.style.display = "table-row";
+          } else {
+            row.style.display = "none";
+          }
+        });
+      }
+
+      // Attach the filterChatHistory function to the input field's "input" event
+      document
+        .getElementById("searchInput")
+        .addEventListener("input", filterChatHistory);
     </script>
 
     <script>
