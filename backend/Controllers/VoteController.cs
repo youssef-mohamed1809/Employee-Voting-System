@@ -152,7 +152,7 @@ namespace backend.Controllers
             List<Rank> rank = new List<Rank>();
             using (var dbContext = new BankdbContext())
             {
-                rank = dbContext.Rank.FromSql($"select top 1 votedEmpID, count(votedEmpID) as votes from votings where depID = {depID} and year = {year} group by votedEmpID, id order by votes desc").ToList();
+                rank = dbContext.Rank.FromSql($"select top 1 votedEmpID, count(votedEmpID) as votes from votings where depID = {depID} and year = {year} group by votedEmpID order by votes desc").ToList();
             }
             return Ok(rank);
         }
