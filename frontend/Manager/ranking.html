@@ -145,13 +145,13 @@
         <table class="table table-bordered table-striped">
           <thead>
             <tr>
-              <th>Rank</th>
-              <th>Option</th>
-              <th>Votes</th>
+              <th>Position</th>
+              <th>Name</th>
             </tr>
           </thead>
           <tbody id="rankingTableBody">
             <!-- Ranking table rows will be dynamically added here -->
+ 
           </tbody>
         </table>
       </div>
@@ -226,12 +226,24 @@
               data: {empID: data[i].votedEmpID},
               success: function(d){
                 employees[i] = d;
+                employees[i].votes = data[i].votes
               }
             })
           }
+          //console.log(employees);
           console.log(employees);
-          console.log(employees);
+          
           //Employees Array is the ranking for the current year
+          tableBody = document.getElementById("rankingTableBody").innerHTML;
+          for(var i = 0; i < employees.length; i++){
+            console.log(i);
+            tableBody += 
+            `<tr>
+                <th>${i}</th>
+                <th>${employee.name}</th>
+                
+              </tr>`
+          }
         },
         error: function (err) {
           console.log(err);

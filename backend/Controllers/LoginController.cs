@@ -30,7 +30,6 @@ namespace backend.Controllers
         {
             List<Employee> employees = new List<Employee>();
             List<Manager> managers = new List<Manager>();
-            //Employee employee1 = new APIEmployee();
             using (var dbContext = new BankdbContext())
             {
                 employees = dbContext.Employee.ToList();
