@@ -223,7 +223,7 @@ body {
     max-width: 400px; /* Optional: Set the maximum width of the card */
     margin: 0 auto; /* Center the card horizontally */
     margin-top: 20vh; /* Adjust the top margin to center the card vertically */
-    background-color: rgba(0,0,0,0.1); /* Black background color with 0.5 opacity */
+    background-color: rgb(255, 255, 255,0.5); /* Black background color with 0.5 opacity */
 
   }
 
