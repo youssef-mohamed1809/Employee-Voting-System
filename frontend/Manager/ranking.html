@@ -57,13 +57,15 @@
     </div>
     <!-- Spinner End -->
     <!-- Navbar Start -->
-    <div id="navbar-container"></div>
-    <div class="container-fluid text-white d-none d-lg-flex" id="red">
-      <div class="container py-3">
-        <div class="d-flex align-items-center">
-          <a href="">
+    <div class="container-fluid text-white bg-danger d-none d-lg-flex">
+      <div class="container py-3 d-flex justify-content-between align-items-center">
+        <div>
+          <a href="#">
             <h2 class="text-white fw-bold m-0">SAIB bank</h2>
           </a>
+        </div>
+        <div>
+          <a onclick="logout()" class="btn btn-outline-light">Logout</a>
         </div>
       </div>
     </div>
@@ -112,32 +114,36 @@
     <h1 class="text-center" id="current-year"></h1>
     <!-- Add this section to your "ranking.html" page -->
     <section id="ranking" class="container mt-5">
-      <h2>Ranking Table</h2>
+      <h2>Voting</h2>
       <div class="table-responsive">
-        <div class="input-group mb-3">
-          <span class="input-group-text"><i class="bi bi-search"></i></span>
-          <input
-            id="searchInput"
-            type="text"
-            class="form-control"
-            placeholder="Search by Employee Name"
-          />
+        <div class="row">
+          <div class="col-md-4 offset-md-8">
+            <!-- Add this input field in the table header -->
+            <input
+              type="text"
+              id="searchInput"
+              class="form-control form-control-sm mb-3 float-right"
+              placeholder="Search by name."
+            />
+          </div>
         </div>
         <table class="table table-bordered table-striped">
           <thead>
             <tr>
-              <th>Rank</th>
-              <th>Employee Name</th>
-              <th>Number of Votes</th>
+              <th scope="col">Rank</th>
+              <th scope="col">Employee Name</th>
+              <th scope="col">Number Of Vote</th>
             </tr>
           </thead>
           <tbody id="rankingTableBody">
             <!-- Ranking table rows will be dynamically added here -->
-    
           </tbody>
         </table>
       </div>
     </section>
+
+    
+    
 
     <!-- Your existing JavaScript code -->
 
@@ -220,17 +226,17 @@
       });
     </script>
     <script>
-      // Function to filter chat history based on the search text
-      function filterChatHistory() {
+      // Function to filter history data based on the search text
+      function filterHistoryData() {
         const searchInput = document.getElementById("searchInput");
         const searchText = searchInput.value.toLowerCase();
 
         const rows = document.querySelectorAll("#rankingTableBody tr");
         rows.forEach((row) => {
-          const chatCharacter = row
-            .querySelector("td:nth-child(2)")
+          const votedEmployee = row
+            .querySelector("td:nth-child(1)")
             .innerText.toLowerCase();
-          if (chatCharacter.includes(searchText)) {
+          if (votedEmployee.includes(searchText)) {
             row.style.display = "table-row";
           } else {
             row.style.display = "none";
@@ -238,10 +244,10 @@
         });
       }
 
-      // Attach the filterChatHistory function to the input field's "input" event
+      // Attach the filterHistoryData function to the input field's "input" event
       document
         .getElementById("searchInput")
-        .addEventListener("input", filterChatHistory);
+        .addEventListener("input", filterHistoryData);
     </script>
 
     <script>

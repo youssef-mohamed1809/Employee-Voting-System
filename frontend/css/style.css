@@ -10,6 +10,17 @@
     --light: #F1F3FA;
     --dark: #1C2035;
 }
+/* Make the search input smaller */
+#searchInput {
+    font-size: 15px;
+    width: 100%;
+  }
+  
+  /* Adjust the position of the search input */
+  /* You can adjust the offset value (padding-right) to control how far right it appears */
+  .col-md-4.offset-md-8 {
+    padding-right: 15px;
+  }
 
 .back-to-top {
     position: fixed;
