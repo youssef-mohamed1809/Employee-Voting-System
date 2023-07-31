@@ -35,13 +35,15 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="loading/loading-overlay.jquery.css" />
+    <link rel="stylesheet" href="loading/loading-overlay.jquery.css">
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet" />
   </head>
 
-  <body class="index-page load">
+  <body class="index-page">
+    
+
     <div class="container-fluid text-white d-none d-lg-flex" id="red">
       <div class="container py-3">
         <div class="d-flex align-items-center">
@@ -52,18 +54,19 @@
       </div>
     </div>
 
+
     <!-- Navbar End -->
 
     <!-- Login Section -->
-    <section class="background-container">
+       <section class="background-container">
       <div class="container">
         <div class="row justify-content-center align-items-center full-height">
           <div class="col-lg-6">
             <div class="card shadow my-custom-card">
               <div class="card-body">
                 <h3 class="card-title text-center mb-4">Login</h3>
-
-                <div class="mb-3">
+  
+                <required><div class="mb-3">
                   <label for="username" class="form-label">Username</label>
                   <input
                     type="text"
@@ -72,8 +75,8 @@
                     id="username"
                     placeholder="Enter your username"
                   />
-                </div>
-                <div class="mb-3">
+                </div></required>
+                <required><div class="mb-3">
                   <label for="password" class="form-label">Password</label>
                   <input
                     type="password"
@@ -82,13 +85,9 @@
                     id="password"
                     placeholder="Enter your password"
                   />
-                </div>
+                </div></required>
                 <div class="text-center">
-                  <button
-                    type="submit"
-                    class="btn btn-primary"
-                    onclick="login()"
-                  >
+                  <button type="submit" class="btn btn-primary" onclick="login()">
                     Login
                   </button>
                 </div>
@@ -98,6 +97,10 @@
         </div>
       </div>
     </section>
+    
+    
+
+
 
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -114,16 +117,21 @@
 
     <!-- API Calls Script -->
     <script>
+    
+    
+       
       document.addEventListener("keypress", function (e) {
         if (e.key == "Enter") {
           login();
         }
       });
       function login() {
-        $(".load").loadingOverlay(true, {});
-        $(".load").loadingOverlay(true, {
-          backgroundColor: "rgba(1,1,1,0.3)",
-          icon: "loading/loading-icon.svg",
+        $('.load').loadingOverlay(true, {
+        
+      });
+    $('.load').loadingOverlay(true, {
+        backgroundColor: 'rgba(1,1,1,0.3)',
+        icon: 'loading\loading-icon.svg'
         });
         var username = document.getElementById("username").value;
         var password = document.getElementById("password").value;
@@ -145,6 +153,9 @@
             sessionStorage.setItem("depID", data.depID);
 
             if (data.role == "Employee") {
+              setTimeout(function(){
+                console.log("Delay");
+              }, 5000)
               //Employee View
               window.location.href = "Employee/home-logged-in.html";
             } else if (data.role == "Manager") {
@@ -153,16 +164,19 @@
             }
           },
           error: function (err) {
-            setTimeout(5000);
-            $(".load").loadingOverlay(false, {});
-            $(".load").loadingOverlay(false, {
-              backgroundColor: "rgba(1,1,1,0.3)",
-              icon: "loading\loading-icon.svg",
-            });
+            setTimeout(5000)
+            $('.load').loadingOverlay(false, {
+        
+      });
+    $('.load').loadingOverlay(false, {
+        backgroundColor: 'rgba(1,1,1,0.3)',
+        icon: 'loading\loading-icon.svg'
+        });
             alert("Invalid login");
           },
         });
       }
     </script>
+    
   </body>
 </html>
