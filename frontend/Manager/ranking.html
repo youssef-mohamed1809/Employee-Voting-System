@@ -230,25 +230,27 @@
       function filterHistoryData() {
         const searchInput = document.getElementById("searchInput");
         const searchText = searchInput.value.toLowerCase();
-
+    
         const rows = document.querySelectorAll("#rankingTableBody tr");
         rows.forEach((row) => {
-          const votedEmployee = row
-            .querySelector("td:nth-child(1)")
-            .innerText.toLowerCase();
-          if (votedEmployee.includes(searchText)) {
+          const employeeName = row
+            .querySelector("td:nth-child(2)")
+            .innerText.toLowerCase(); // Fetching the name of the employee from the second column
+          if (employeeName.includes(searchText)) {
             row.style.display = "table-row";
           } else {
             row.style.display = "none";
           }
         });
       }
-
+    
       // Attach the filterHistoryData function to the input field's "input" event
-      document
-        .getElementById("searchInput")
-        .addEventListener("input", filterHistoryData);
+      document.getElementById("searchInput").addEventListener("input", filterHistoryData);
+    
+      // Call filterHistoryData once initially to ensure all rows are visible on the first load
+      filterHistoryData();
     </script>
+    
 
     <script>
       var date = new Date();
