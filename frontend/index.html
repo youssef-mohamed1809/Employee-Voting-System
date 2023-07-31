@@ -155,9 +155,6 @@
             sessionStorage.setItem("depID", data.depID);
 
             if (data.role == "Employee") {
-              setTimeout(function(){
-                console.log("Delay");
-              }, 5000)
               //Employee View
               window.location.href = "Employee/home-logged-in.html";
             } else if (data.role == "Manager") {
