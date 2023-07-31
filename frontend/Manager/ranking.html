@@ -109,7 +109,7 @@
     <!-- Navbar End -->
 
     <!-- Your existing HTML content -->
-
+    <h1 class="text-center" id="current-year"></h1>
     <!-- Add this section to your "ranking.html" page -->
     <section id="ranking" class="container mt-5">
       <h2>Ranking Table</h2>
@@ -245,6 +245,10 @@
     </script>
 
     <script>
+      var date = new Date();
+      //let currentYear = date.getFullYear();
+      h1 = document.getElementById('current-year');
+      h1.innerHTML = "Current Year: " + year; 
       function logout() {
         sessionStorage.clear();
         window.location.href = "../index.html";
