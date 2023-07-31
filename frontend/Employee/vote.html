@@ -195,6 +195,13 @@
 
     <!--API Calls Script-->
     <script>
+
+      votingIsOpen().then(function(open){
+        if(!open){
+          
+        }
+      })
+
       var date = new Date();
       var year = date.getFullYear();
       h1 = document.getElementById('current-year');
@@ -302,6 +309,7 @@
                         console.log(err);
                       });
                   } else {
+                    /**/
                     alert("Voting is currently unavailable");
                     $(".load").loadingOverlay(false, {});
                     $(".load").loadingOverlay(false, {
