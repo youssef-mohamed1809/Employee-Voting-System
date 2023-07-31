@@ -45,11 +45,6 @@
   </head>
 
   <body>
-    <!-- Topbar Start -->
-
-    <!-- Topbar End -->
-
-    <!-- Navbar start -->
 
     <div id="navbar-container"></div>
 
@@ -106,24 +101,6 @@
           </div>
       </div>
   </div>
-    <!-- Footer Start -->
-    <div id="footer-container"></div>
-    <script>
-      // Function to fetch and insert footer content
-      function includeFooter() {
-        fetch("../footer.html")
-          .then((response) => response.text())
-          .then((data) => {
-            document.getElementById("footer-container").innerHTML = data;
-          })
-          .catch((error) => {
-            console.error("Error fetching footer content:", error);
-          });
-      }
-
-      // Call the function to include the footer when the page loads
-      window.addEventListener("load", includeFooter);
-    </script>
 
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
