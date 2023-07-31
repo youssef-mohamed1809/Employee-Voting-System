@@ -208,6 +208,24 @@
     border-color: rgba(0, 0, 0, .03) !important;
 }
 
+.index-page {
+    background-image: url('../img/new.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+  .background-container {
+    height: 100vh;
+  }
+
+  .my-custom-card {
+    max-width: 400px; /* Optional: Set the maximum width of the card */
+    margin: 0 auto; /* Center the card horizontally */
+    margin-top: 20vh; /* Adjust the top margin to center the card vertically */
+    background-color: rgb(255, 255, 255,0.5); /* Black background color with 0.5 opacity */
+
+  }
 
 /*** About ***/
 .about {
