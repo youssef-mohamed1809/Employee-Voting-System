@@ -105,7 +105,7 @@
     </div>
 
     <!-- Navbar End -->
-
+    <h1 id="current-year"></h1>
     <!-- Voting Section -->
     <section id="ranking" class="container mt-5">
       <h2>Voting</h2>
@@ -195,8 +195,10 @@
 
     <!--API Calls Script-->
     <script>
+      var date = new Date();
+      h1 = document.getElementById('current-year');
+      h1.innerHTML = "Current Year: " + year; 
       console.log(sessionStorage.getItem("id"));
-
       function fetchEmployees() {
         var memberList = document.getElementById("memberList");
         $.ajax({
