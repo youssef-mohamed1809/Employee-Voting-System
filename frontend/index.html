@@ -41,34 +41,8 @@
     <link href="css/style.css" rel="stylesheet" />
   </head>
 
-  <body>
-    <!-- Navbar Start -->
-    <!-- <div id="navbar-container"></div>
-    <script>
-        // Function to fetch and insert navbar content
-        function includeNavbar() {
-            fetch('navbar.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('navbar-container').innerHTML = data;
-
-                    // Set the active class for the current page
-                    const currentPage = window.location.pathname.split('/').pop();
-                    const navbarLinks = document.querySelectorAll('#navbar-container .nav-item.nav-link');
-                    navbarLinks.forEach(link => {
-                        if (link.getAttribute('href').split('/').pop() === currentPage) {
-                            link.classList.add('active');
-                        }
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching navbar content:', error);
-                });
-        }
-
-        // Call the function to include the navbar when the page loads
-        window.addEventListener('load', includeNavbar);
-    </script> -->
+  <body class="load">
+    
 
     <div class="container-fluid text-white d-none d-lg-flex" id="red">
       <div class="container py-3">
@@ -76,63 +50,10 @@
           <a href="index.html">
             <h2 class="text-white fw-bold m-0">SAIB bank</h2>
           </a>
-          <div class="ms-auto d-flex align-items-center">
-            <small class="ms-4"
-              ><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York,
-              USA</small
-            >
-            <small class="ms-4"
-              ><i class="fa fa-envelope me-3"></i>info@example.com</small
-            >
-            <small class="ms-4"
-              ><i class="fa fa-phone-alt me-3"></i>+012 345 67890</small
-            >
-            <div class="ms-3 d-flex">
-              <a
-                class="btn btn-sm-square btn-light text-primary rounded-circle ms-2"
-                href=""
-                ><i class="fab fa-facebook-f"></i
-              ></a>
-              <a
-                class="btn btn-sm-square btn-light text-primary rounded-circle ms-2"
-                href=""
-                ><i class="fab fa-twitter"></i
-              ></a>
-              <a
-                class="btn btn-sm-square btn-light text-primary rounded-circle ms-2"
-                href=""
-                ><i class="fab fa-linkedin-in"></i
-              ></a>
-            </div>
-          </div>
         </div>
       </div>
     </div>
 
-
-    <!-- <div class="container-fluid bg-white sticky-top">
-      <div class="container">
-        <nav class="navbar navbar-expand-lg bg-white navbar-light p-lg-0">
-          <a href="index.html" class="navbar-brand d-lg-none">
-            <h1 class="fw-bold m-0">SAIB</h1>
-          </a>
-          <button
-            class="navbar-toggler me-0"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarCollapse"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav">
-              <a href="index.html" class="nav-item nav-link">Home</a>
-              other links -->
-            <!--</div>
-          </div>
-        </nav>
-      </div>
-    </div> -->
 
     <!-- Navbar End -->
 
@@ -175,26 +96,8 @@
       </div>
     </section>
     
+    
 
-    <!-- End Login Section -->
-
-    <div id="footer-container"></div>
-    <script>
-      // Function to fetch and insert footer content
-      /*function includeFooter() {
-        fetch("footer.html")
-          .then((response) => response.text())
-          .then((data) => {
-            document.getElementById("footer-container").innerHTML = data;
-          })
-          .catch((error) => {
-            console.error("Error fetching footer content:", error);
-          });
-      }*/
-
-      // Call the function to include the footer when the page loads
-      window.addEventListener("load", includeFooter);
-    </script>
 
 
     <!-- JavaScript Libraries -->
@@ -212,23 +115,22 @@
 
     <!-- API Calls Script -->
     <script>
-
-
-
-
+    
+    
+       
       document.addEventListener("keypress", function (e) {
         if (e.key == "Enter") {
           login();
         }
       });
-      async function login() {
-        $('.loading').loadingOverlay(true, {
-            backgroundColor: 'rgba(255,255,255,0.85)'
+      function login() {
+        $('.load').loadingOverlay(true, {
+        
+      });
+    $('.load').loadingOverlay(true, {
+        backgroundColor: 'rgba(1,1,1,0.3)',
+        icon: 'loading\loading-icon.svg'
         });
-
-        const myTimeout = setTimeout(function(){
-          console.log("Waiting...");
-        }, 5000);
         var username = document.getElementById("username").value;
         var password = document.getElementById("password").value;
         let login = {
@@ -249,6 +151,9 @@
             sessionStorage.setItem("depID", data.depID);
 
             if (data.role == "Employee") {
+              setTimeout(function(){
+                console.log("Delay");
+              }, 5000)
               //Employee View
               window.location.href = "Employee/home-logged-in.html";
             } else if (data.role == "Manager") {
@@ -257,14 +162,19 @@
             }
           },
           error: function (err) {
+            setTimeout(5000)
+            $('.load').loadingOverlay(false, {
+        
+      });
+    $('.load').loadingOverlay(false, {
+        backgroundColor: 'rgba(1,1,1,0.3)',
+        icon: 'loading\loading-icon.svg'
+        });
             alert("Invalid login");
           },
         });
       }
     </script>
     
-    <script>
-
-    </script>
   </body>
 </html>
