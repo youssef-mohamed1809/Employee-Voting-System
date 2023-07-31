@@ -105,8 +105,13 @@
     </div>
 
     <!-- Navbar End -->
+    <div id="voting">
     <h1 class="text-center" id="current-year"></h1>
     <!-- Voting Section -->
+
+      <h1 id="unavailable" class="text-center">Voting is Currently Unavailable</h1>
+
+
     <section id="ranking" class="container mt-5">
       <h2>Voting</h2>
       <div class="table-responsive">
@@ -134,6 +139,7 @@
         </table>
       </div>
     </section>
+    </div>
     
     <!-- End Voting Section -->
 
@@ -158,6 +164,8 @@
     <script src="../js/main.js"></script>
 
     <script>
+
+
       // Function to search for members
       function searchMembers() {
         const searchValue = document.getElementById("search").value;
@@ -195,10 +203,13 @@
 
     <!--API Calls Script-->
     <script>
-
+      var x = document.getElementById("unavailable");
+      x.style.visibility = "hidden";
       votingIsOpen().then(function(open){
         if(!open){
-          
+          var r = document.getElementById("voting");
+          r.style.visibility = "hidden";
+          x.style.visibility = "visible";
         }
       })
 
