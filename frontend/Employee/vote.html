@@ -38,12 +38,12 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="../css/bootstrap.min.css" rel="stylesheet" />
-
+    <link rel="stylesheet" href="../loading/loading-overlay.jquery.css" />
     <!-- Template Stylesheet -->
     <link href="../css/style.css" rel="stylesheet" />
   </head>
 
-  <body>
+  <body class="load">
     <!-- Spinner Start -->
     <div
       id="spinner"
@@ -65,7 +65,6 @@
           <a href="home-logged-in.html">
             <h2 class="text-white fw-bold m-0">SAIB bank</h2>
           </a>
-      
         </div>
       </div>
     </div>
@@ -88,13 +87,21 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav">
-              <a href="../Employee/home-logged-in.html" class="nav-item nav-link">Home</a>
+              <a
+                href="../Employee/home-logged-in.html"
+                class="nav-item nav-link"
+                >Home</a
+              >
               <a href="../Employee/vote.html" class="nav-item nav-link">Vote</a>
-              <a href="../Employee/history_vote.html" class="nav-item nav-link">History Vote</a>
+              <a href="../Employee/history_vote.html" class="nav-item nav-link"
+                >History Vote</a
+              >
             </div>
             <!-- Move the logout link to the right -->
             <div class="navbar-nav ms-auto">
-              <a onclick="logout()" class="nav-item nav-link" href="#">Logout</a>
+              <a onclick="logout()" class="nav-item nav-link" href="#"
+                >Logout</a
+              >
             </div>
           </div>
         </nav>
@@ -150,7 +157,6 @@
     <!-- Footer End -->
 
     <!-- Back to Top -->
- 
 
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -160,6 +166,7 @@
     <script src="../lib/waypoints/waypoints.min.js"></script>
     <script src="../lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="../lib/lightbox/js/lightbox.min.js"></script>
+    <script src="../loading/loading-overlay.jquery.js"></script>
 
     <!-- Template Javascript -->
     <script src="../js/main.js"></script>
@@ -237,6 +244,11 @@
               };
 
               voteButton.onclick = function sendVote() {
+                $(".load").loadingOverlay(true, {});
+                $(".load").loadingOverlay(true, {
+                  backgroundColor: "rgba(1,1,1,0.3)",
+                  icon: "loading/loading-icon.svg",
+                });
                 votingIsOpen().then(function (open) {
                   if (open) {
                     hasEmployeeVoted()
@@ -248,6 +260,11 @@
                               alert("Vote success");
                             },
                             function (err) {
+                              $(".load").loadingOverlay(false, {});
+                            $(".load").loadingOverlay(false, {
+                              backgroundColor: "rgba(1,1,1,0.3)",
+                              icon: "loading/loading-icon.svg",
+                            })
                               console.log(err);
                               alert("An error ocurred, please try again");
                             }
@@ -261,28 +278,58 @@
                             submitVote(employee, vote).then(
                               function (value) {
                                 alert("Vote updated successfully");
+                                $(".load").loadingOverlay(false, {});
+                                $(".load").loadingOverlay(false, {
+                                  backgroundColor: "rgba(1,1,1,0.3)",
+                                  icon: "loading/loading-icon.svg",
+                                });
                               },
                               function (err) {
                                 console.log(err);
                                 alert("An error ocurred, please try again");
+                                $(".load").loadingOverlay(false, {});
+                                $(".load").loadingOverlay(false, {
+                                  backgroundColor: "rgba(1,1,1,0.3)",
+                                  icon: "loading/loading-icon.svg",
+                                });
                               }
                             );
                           } else {
+                            $(".load").loadingOverlay(false, {});
+                            $(".load").loadingOverlay(false, {
+                              backgroundColor: "rgba(1,1,1,0.3)",
+                              icon: "loading/loading-icon.svg",
+                            });
                             console.log("Vote Cancelled");
                           }
                         }
                       })
                       .catch(function (err) {
+                        $(".load").loadingOverlay(false, {});
+                        $(".load").loadingOverlay(false, {
+                          backgroundColor: "rgba(1,1,1,0.3)",
+                          icon: "loading/loading-icon.svg",
+                        });
                         console.log(err);
                       });
                   } else {
                     alert("Voting is currently unavailable");
+                    $(".load").loadingOverlay(false, {});
+                    $(".load").loadingOverlay(false, {
+                      backgroundColor: "rgba(1,1,1,0.3)",
+                      icon: "loading/loading-icon.svg",
+                    });
                   }
                 });
               };
             });
           },
           error: function (err) {
+            $(".load").loadingOverlay(false, {});
+            $(".load").loadingOverlay(false, {
+              backgroundColor: "rgba(1,1,1,0.3)",
+              icon: "loading\loading-icon.svg",
+            });
             console.log(err);
           },
         });
