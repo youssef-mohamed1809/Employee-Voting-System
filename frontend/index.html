@@ -35,39 +35,14 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="loading/loading-overlay.jquery.css">
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet" />
   </head>
 
   <body>
-    <!-- Navbar Start -->
-    <!-- <div id="navbar-container"></div>
-    <script>
-        // Function to fetch and insert navbar content
-        function includeNavbar() {
-            fetch('navbar.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('navbar-container').innerHTML = data;
-
-                    // Set the active class for the current page
-                    const currentPage = window.location.pathname.split('/').pop();
-                    const navbarLinks = document.querySelectorAll('#navbar-container .nav-item.nav-link');
-                    navbarLinks.forEach(link => {
-                        if (link.getAttribute('href').split('/').pop() === currentPage) {
-                            link.classList.add('active');
-                        }
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching navbar content:', error);
-                });
-        }
-
-        // Call the function to include the navbar when the page loads
-        window.addEventListener('load', includeNavbar);
-    </script> -->
+    <div class="loading"></div>
 
     <div class="container-fluid text-white d-none d-lg-flex" id="red">
       <div class="container py-3">
@@ -108,35 +83,7 @@
       </div>
     </div>
 
-    <!-- navbar.html -->
 
-    <!-- <div class="container-fluid bg-white sticky-top">
-      <div class="container">
-        <nav class="navbar navbar-expand-lg bg-white navbar-light p-lg-0">
-          <a href="index.html" class="navbar-brand d-lg-none">
-            <h1 class="fw-bold m-0">SAIB</h1>
-          </a>
-          <button
-            class="navbar-toggler me-0"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarCollapse"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav">
-              <a href="index.html" class="nav-item nav-link">Home</a>
-              other links -->
-            <!--</div>
-          </div>
-        </nav>
-      </div>
-    </div> -->
-
-    <!-- Navbar End -->
-
-    <!-- Login Section -->
     <section class="container py-5">
       <div class="row justify-content-center">
         <div class="col-lg-6">
@@ -209,18 +156,30 @@
     <script src="lib/waypoints/waypoints.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="lib/lightbox/js/lightbox.min.js"></script>
+    <script src="loading/loading-overlay.jquery.js"></script>
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
     <!-- API Calls Script -->
     <script>
+
+
+
+
       document.addEventListener("keypress", function (e) {
         if (e.key == "Enter") {
           login();
         }
       });
-      function login() {
+      async function login() {
+        $('.loading').loadingOverlay(true, {
+            backgroundColor: 'rgba(255,255,255,0.85)'
+        });
+
+        const myTimeout = setTimeout(function(){
+          console.log("Waiting...");
+        }, 5000);
         var username = document.getElementById("username").value;
         var password = document.getElementById("password").value;
         let login = {
@@ -253,6 +212,10 @@
           },
         });
       }
+    </script>
+    
+    <script>
+
     </script>
   </body>
 </html>
